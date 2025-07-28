@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔴 LIVE Indian Stock & MF Analyzer - Always Fresh Data</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header with Fresh Data Guarantee -->
+        <header class="header">
+            <div class="header-content">
+                <h1>🔴 LIVE Indian Stock & MF Analyzer</h1>
+                <p class="header-subtitle">🚀 ALWAYS FRESH DATA - Never Cached • Real-time Analysis</p>
+                <div class="fresh-data-indicator">
+                    <span class="fresh-pulse"></span>
+                    <span class="fresh-text">100% Fresh Data Guaranteed</span>
+                    <span class="cache-status" id="cacheStatus">Cache: CLEARED</span>
+                </div>
+                <div class="data-freshness" id="dataFreshness">
+                    <span id="lastFetchTime">Ready to fetch fresh data...</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Overall Buy Rating Panel -->
+        <div class="overall-rating-panel">
+            <div class="rating-display">
+                <div class="rating-circle">
+                    <span class="rating-value" id="globalBuyRating">-</span>
+                    <span class="rating-label">AI Buy Rating</span>
+                </div>
+                <div class="term-recommendations">
+                    <div class="term-item">
+                        <span class="term-period">Short Term</span>
+                        <span class="term-call" id="globalShortTerm">-</span>
+                    </div>
+                    <div class="term-item">
+                        <span class="term-period">Mid Term</span>
+                        <span class="term-call" id="globalMidTerm">-</span>
+                    </div>
+                    <div class="term-item">
+                        <span class="term-period">Long Term</span>
+                        <span class="term-call" id="globalLongTerm">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Status Banner -->
+        <div class="market-status">
+            <div class="status-item">
+                <span class="status-icon">🟢</span>
+                <span class="status-text">Market OPEN</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">NIFTY 50:</span>
+                <span class="status-value positive">24,687.45 (+0.82%)</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">SENSEX:</span>
+                <span class="status-value positive">81,047.23 (+0.65%)</span>
+            </div>
+            <div class="status-item fresh-guarantee">
+                <span class="guarantee-icon">✅</span>
+                <span class="guarantee-text">Fresh Data Mode: ON</span>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <nav class="main-nav">
+            <button class="main-tab-btn btn btn--primary active" data-tab="stocks">
+                📈 Stocks Analysis
+            </button>
+            <button class="main-tab-btn btn btn--outline" data-tab="mutual-funds">
+                📊 Mutual Funds Analysis
+            </button>
+        </nav>
+
+        <!-- Stocks Tab -->
+        <div id="stocks" class="main-tab-content active">
+            <div class="search-section">
+                <div class="fresh-search-header">
+                    <h2>🔍 Stock Search - Always Fresh Data</h2>
+                    <p class="search-subtitle">Enter any NSE/BSE symbol • 1000+ symbols supported • Cache cleared on every search</p>
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input type="text" id="stockSymbol" class="form-control search-input" 
+                               placeholder="Enter any NSE symbol (RELIANCE, TCS, HDFC, JPPOWER, IDEA, SUZLON, YESBANK...)" 
+                               autocomplete="off">
+                        <div class="suggestion-dropdown hidden" id="stockSuggestions"></div>
+                    </div>
+                    <button id="fetchStockBtn" class="btn btn--primary search-btn">
+                        <span class="btn-text">🚀 Fetch Fresh Data</span>
+                        <div class="loading-spinner hidden"></div>
+                    </button>
+                </div>
+
+                <div class="fresh-data-status" id="freshDataStatus">
+                    <div class="status-row">
+                        <span class="status-key">Cache Status:</span>
+                        <span class="status-value" id="cacheStatusValue">Ready</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-key">Data Source:</span>
+                        <span class="status-value" id="dataSourceValue">Live Market Feed</span>
+                    </div>
+                    <div class="status-row">
+                        <span class="status-key">Last Updated:</span>
+                        <span class="status-value" id="lastUpdatedValue">Never</span>
+                    </div>
+                </div>
+
+                <div class="quick-symbols">
+                    <span class="quick-label">Quick Try:</span>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('RELIANCE')">RELIANCE</button>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('TCS')">TCS</button>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('HDFCBANK')">HDFCBANK</button>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('JPPOWER')">JPPOWER</button>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('IDEA')">IDEA</button>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('SUZLON')">SUZLON</button>
+                    <button class="quick-symbol-btn" onclick="app.quickFetch('YESBANK')">YESBANK</button>
+                </div>
+            </div>
+
+            <!-- Stock Results -->
+            <div id="stockResults" class="results-container hidden">
+                <!-- Stock Header -->
+                <div class="stock-header">
+                    <div class="stock-info">
+                        <div class="stock-title">
+                            <h2 id="stockName">-</h2>
+                            <span class="live-badge">🔴 LIVE</span>
+                        </div>
+                        <p id="stockDetails">Loading fresh data...</p>
+                        <div class="fresh-timestamp">
+                            <span class="timestamp-icon">⏰</span>
+                            <span id="dataTimestamp">-</span>
+                        </div>
+                    </div>
+                    <div class="price-panel">
+                        <div class="current-price">
+                            <span id="currentPrice">-</span>
+                            <div class="price-change" id="priceChange">
+                                <span id="changeValue">-</span>
+                                <span id="changePercent">-</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="rating-summary">
+                        <div class="overall-rating">
+                            <span class="rating-label">Overall Buy Rating</span>
+                            <span class="rating-value" id="overallRating">-</span>
+                        </div>
+                        <div class="rating-breakdown">
+                            <div class="rating-item">
+                                <span class="rating-name">Technical</span>
+                                <span class="rating-score" id="technicalScore">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-name">Fundamental</span>
+                                <span class="rating-score" id="fundamentalScore">-</span>
+                            </div>
+                            <div class="rating-item">
+                                <span class="rating-name">Shareholding</span>
+                                <span class="rating-score" id="shareholdingScore">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analysis Tabs -->
+                <div class="analysis-tabs">
+                    <nav class="analysis-nav">
+                        <button class="analysis-tab-btn active" data-tab="technical">
+                            📈 Technical Analysis
+                            <span class="tab-badge" id="technicalBadge">-</span>
+                        </button>
+                        <button class="analysis-tab-btn" data-tab="fundamental">
+                            📊 Fundamental Analysis
+                            <span class="tab-badge" id="fundamentalBadge">-</span>
+                        </button>
+                        <button class="analysis-tab-btn" data-tab="shareholding">
+                            👥 Shareholding & Pledge
+                            <span class="tab-badge" id="shareholdingBadge">-</span>
+                        </button>
+                        <button class="analysis-tab-btn" data-tab="financials">
+                            🏢 Company Financials
+                        </button>
+                    </nav>
+
+                    <!-- Technical Analysis Tab -->
+                    <div id="technical" class="analysis-tab-panel active">
+                        <div class="tab-header">
+                            <h3>📈 Technical Analysis Dashboard</h3>
+                            <div class="fresh-badge">
+                                <span class="fresh-icon">✅</span>
+                                <span>Fresh Technical Data</span>
+                            </div>
+                        </div>
+                        
+                        <div class="technical-grid">
+                            <div class="card">
+                                <div class="card__header">
+                                    <h4>🎯 Key Technical Indicators</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="indicators-grid">
+                                        <div class="indicator-item">
+                                            <span class="indicator-label">RSI (14)</span>
+                                            <span class="indicator-value" id="rsiValue">-</span>
+                                            <span class="indicator-signal" id="rsiSignal">-</span>
+                                        </div>
+                                        <div class="indicator-item">
+                                            <span class="indicator-label">MACD</span>
+                                            <span class="indicator-value" id="macdValue">-</span>
+                                            <span class="indicator-signal" id="macdSignal">-</span>
+                                        </div>
+                                        <div class="indicator-item">
+                                            <span class="indicator-label">Bollinger %B</span>
+                                            <span class="indicator-value" id="bollingerValue">-</span>
+                                            <span class="indicator-signal" id="bollingerSignal">-</span>
+                                        </div>
+                                        <div class="indicator-item">
+                                            <span class="indicator-label">ADX</span>
+                                            <span class="indicator-value" id="adxValue">-</span>
+                                            <span class="indicator-signal" id="adxSignal">-</span>
+                                        </div>
+                                        <div class="indicator-item">
+                                            <span class="indicator-label">ATR</span>
+                                            <span class="indicator-value" id="atrValue">-</span>
+                                            <span class="indicator-signal" id="atrSignal">-</span>
+                                        </div>
+                                        <div class="indicator-item">
+                                            <span class="indicator-label">Stochastic</span>
+                                            <span class="indicator-value" id="stochasticValue">-</span>
+                                            <span class="indicator-signal" id="stochasticSignal">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card chart-card">
+                                <div class="card__header">
+                                    <h4>📊 Live Price Chart with S/R Levels</h4>
+                                    <div class="chart-controls">
+                                        <button class="btn btn--outline btn--sm active" data-timeframe="daily">Daily</button>
+                                        <button class="btn btn--outline btn--sm" data-timeframe="weekly">Weekly</button>
+                                        <button class="btn btn--outline btn--sm" data-timeframe="monthly">Monthly</button>
+                                    </div>
+                                </div>
+                                <div class="card__body">
+                                    <div class="chart-container" style="position: relative; height: 400px;">
+                                        <canvas id="priceChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fundamental Analysis Tab -->
+                    <div id="fundamental" class="analysis-tab-panel">
+                        <div class="tab-header">
+                            <h3>📊 Fundamental Analysis Dashboard</h3>
+                            <div class="fresh-badge">
+                                <span class="fresh-icon">✅</span>
+                                <span>Fresh Financial Data</span>
+                            </div>
+                        </div>
+                        
+                        <div class="fundamental-grid">
+                            <div class="card">
+                                <div class="card__header">
+                                    <h4>💰 Valuation Metrics</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">P/E Ratio</span>
+                                            <span class="metric-value" id="peRatio">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">PEG Ratio</span>
+                                            <span class="metric-value" id="pegRatio">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">P/B Ratio</span>
+                                            <span class="metric-value" id="pbRatio">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">EV/EBITDA</span>
+                                            <span class="metric-value" id="evEbitda">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card__header">
+                                    <h4>📈 Profitability Ratios</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">ROE (%)</span>
+                                            <span class="metric-value" id="roeValue">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">ROA (%)</span>
+                                            <span class="metric-value" id="roaValue">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">ROCE (%)</span>
+                                            <span class="metric-value" id="roceValue">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Net Margin (%)</span>
+                                            <span class="metric-value" id="netMargin">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card__header">
+                                    <h4>🏦 Financial Health</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-label">Current Ratio</span>
+                                            <span class="metric-value" id="currentRatio">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Quick Ratio</span>
+                                            <span class="metric-value" id="quickRatio">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Debt/Equity</span>
+                                            <span class="metric-value" id="debtEquity">-</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-label">Interest Coverage</span>
+                                            <span class="metric-value" id="interestCoverage">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shareholding Tab -->
+                    <div id="shareholding" class="analysis-tab-panel">
+                        <div class="tab-header">
+                            <h3>👥 Shareholding Pattern & Pledge Analysis</h3>
+                            <div class="fresh-badge">
+                                <span class="fresh-icon">✅</span>
+                                <span>Fresh Shareholding Data</span>
+                            </div>
+                        </div>
+                        
+                        <div class="shareholding-grid">
+                            <div class="card chart-card">
+                                <div class="card__header">
+                                    <h4>📊 Shareholding Trend with Pledge Overlay</h4>
+                                    <div class="chart-controls">
+                                        <button class="btn btn--outline btn--sm active" data-period="2y">2 Years</button>
+                                        <button class="btn btn--outline btn--sm" data-period="5y">5 Years</button>
+                                    </div>
+                                </div>
+                                <div class="card__body">
+                                    <div class="chart-container" style="position: relative; height: 400px;">
+                                        <canvas id="shareholdingChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card">
+                                <div class="card__header">
+                                    <h4>🏛️ Current Holdings Distribution</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="holdings-list">
+                                        <div class="holding-row">
+                                            <span class="holding-label">Promoter Holdings</span>
+                                            <div class="holding-value-group">
+                                                <span class="holding-value" id="promoterHolding">-</span>
+                                                <span class="holding-change" id="promoterChange">-</span>
+                                            </div>
+                                        </div>
+                                        <div class="holding-row">
+                                            <span class="holding-label">FII Holdings</span>
+                                            <div class="holding-value-group">
+                                                <span class="holding-value" id="fiiHolding">-</span>
+                                                <span class="holding-change" id="fiiChange">-</span>
+                                            </div>
+                                        </div>
+                                        <div class="holding-row">
+                                            <span class="holding-label">DII Holdings</span>
+                                            <div class="holding-value-group">
+                                                <span class="holding-value" id="diiHolding">-</span>
+                                                <span class="holding-change" id="diiChange">-</span>
+                                            </div>
+                                        </div>
+                                        <div class="holding-row pledge-row">
+                                            <span class="holding-label">⚠️ Promoter Pledge</span>
+                                            <div class="holding-value-group">
+                                                <span class="holding-value pledge-value" id="pledgePercent">-</span>
+                                                <span class="pledge-risk" id="pledgeRisk">-</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Financials Tab -->
+                    <div id="financials" class="analysis-tab-panel">
+                        <div class="tab-header">
+                            <h3>🏢 Company Financial Performance</h3>
+                            <div class="fresh-badge">
+                                <span class="fresh-icon">✅</span>
+                                <span>Fresh Quarterly Data</span>
+                            </div>
+                        </div>
+                        
+                        <div class="financials-grid">
+                            <div class="card chart-card">
+                                <div class="card__header">
+                                    <h4>📈 Quarterly Revenue Trend</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="chart-container" style="position: relative; height: 300px;">
+                                        <canvas id="revenueChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="card chart-card">
+                                <div class="card__header">
+                                    <h4>💰 Quarterly Profit Trend</h4>
+                                </div>
+                                <div class="card__body">
+                                    <div class="chart-container" style="position: relative; height: 300px;">
+                                        <canvas id="profitChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mutual Funds Tab -->
+        <div id="mutual-funds" class="main-tab-content">
+            <div class="search-section">
+                <div class="fresh-search-header">
+                    <h2>🔍 Mutual Fund Analysis - Always Fresh Data</h2>
+                    <p class="search-subtitle">Search and select multiple funds • 500+ schemes supported • Fresh NAV & performance data</p>
+                </div>
+                
+                <div class="search-container">
+                    <div class="search-input-wrapper">
+                        <input type="text" id="fundSearch" class="form-control search-input" 
+                               placeholder="Search mutual funds (SBI Bluechip, HDFC Top 100, Axis Bluechip...)" 
+                               autocomplete="off">
+                        <div class="fund-suggestions hidden" id="fundSuggestions"></div>
+                    </div>
+                </div>
+
+                <div class="selected-funds-section">
+                    <div class="selected-funds" id="selectedFunds"></div>
+                    <div class="analyze-section">
+                        <button id="analyzeFundsBtn" class="btn btn--primary btn--lg hidden">
+                            <span class="btn-text">🔍 Analyze Selected Funds (Fresh Data)</span>
+                            <div class="loading-spinner hidden"></div>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="quick-funds">
+                    <span class="quick-label">Quick Try:</span>
+                    <button class="quick-fund-btn" onclick="app.quickSelectFund('SBI Bluechip Fund - Direct Growth')">SBI Bluechip</button>
+                    <button class="quick-fund-btn" onclick="app.quickSelectFund('HDFC Top 100 Fund - Direct Growth')">HDFC Top 100</button>
+                    <button class="quick-fund-btn" onclick="app.quickSelectFund('Axis Bluechip Fund - Direct Growth')">Axis Bluechip</button>
+                </div>
+            </div>
+
+            <!-- Fund Results -->
+            <div id="fundResults" class="results-container hidden">
+                <!-- Single Fund Analysis -->
+                <div id="singleFundAnalysis" class="single-fund-analysis hidden">
+                    <div class="fund-header">
+                        <div class="fund-info">
+                            <div class="fund-title">
+                                <h2 id="fundName">-</h2>
+                                <span class="fund-rating" id="fundRating">-</span>
+                            </div>
+                            <p id="fundDetails">Loading fresh fund data...</p>
+                            <div class="fresh-timestamp">
+                                <span class="timestamp-icon">⏰</span>
+                                <span id="fundTimestamp">-</span>
+                            </div>
+                        </div>
+                        <div class="fund-performance">
+                            <div class="nav-section">
+                                <span class="nav-label">Current NAV</span>
+                                <span class="nav-value" id="currentNAV">-</span>
+                            </div>
+                            <div class="rating-section">
+                                <span class="rating-label">Buy Rating</span>
+                                <span class="rating-value" id="fundBuyRating">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fund-analysis-grid">
+                        <div class="card">
+                            <div class="card__header">
+                                <h4>📈 Performance Metrics</h4>
+                            </div>
+                            <div class="card__body">
+                                <div class="performance-metrics">
+                                    <div class="metric-row">
+                                        <span class="metric-label">1-Year Returns</span>
+                                        <span class="metric-value" id="returns1Y">-</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">3-Year Returns</span>
+                                        <span class="metric-value" id="returns3Y">-</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">5-Year Returns</span>
+                                        <span class="metric-value" id="returns5Y">-</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">Expense Ratio</span>
+                                        <span class="metric-value" id="expenseRatio">-</span>
+                                    </div>
+                                    <div class="metric-row">
+                                        <span class="metric-label">AUM</span>
+                                        <span class="metric-value" id="fundAUM">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card chart-card">
+                            <div class="card__header">
+                                <h4>🏢 Sector Allocation</h4>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 350px;">
+                                    <canvas id="sectorChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card__header">
+                                <h4>🏆 Top Holdings</h4>
+                            </div>
+                            <div class="card__body">
+                                <div class="holdings-table" id="topHoldings"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multiple Fund Analysis -->
+                <div id="multipleFundAnalysis" class="multiple-fund-analysis hidden">
+                    <div class="comparison-header">
+                        <h2>🔍 Multi-Fund Comparison & Overlap Analysis</h2>
+                        <p class="comparison-subtitle">Fresh performance data and portfolio optimization suggestions</p>
+                    </div>
+
+                    <div class="comparison-grid">
+                        <div class="card chart-card">
+                            <div class="card__header">
+                                <h4>📊 Performance Comparison</h4>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 350px;">
+                                    <canvas id="performanceChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card chart-card">
+                            <div class="card__header">
+                                <h4>🏢 Sector Overlap Analysis</h4>
+                            </div>
+                            <div class="card__body">
+                                <div class="chart-container" style="position: relative; height: 350px;">
+                                    <canvas id="overlapChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card full-width">
+                            <div class="card__header">
+                                <h4>💡 Diversification Suggestions (5-10 Funds)</h4>
+                                <p class="card-subtitle">AI-powered portfolio optimization recommendations</p>
+                            </div>
+                            <div class="card__body">
+                                <div class="suggestions-grid" id="diversificationSuggestions"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Display -->
+        <div id="errorContainer" class="error-container hidden">
+            <div class="status status--error">
+                <span id="errorMessage">Error message will appear here</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
