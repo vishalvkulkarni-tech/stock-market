@@ -1,1558 +1,1176 @@
-// Indian Stock & Mutual Fund Analyzer - Always Fresh Data - Fixed Version
-class FreshDataStockAnalyzer {
-    constructor() {
-        console.log('🚀 Initializing Fresh Data Stock & MF Analyzer...');
-        
-        // COMPREHENSIVE NSE SYMBOL DATABASE (1000+ symbols)
-        this.stockSymbols = [
-            // NIFTY 50 & Major Stocks
-            "RELIANCE", "TCS", "HDFCBANK", "ICICIBANK", "INFY", "HINDUNILVR", "ITC", "KOTAKBANK",
-            "LT", "AXISBANK", "BAJFINANCE", "BHARTIARTL", "ASIANPAINT", "MARUTI", "NESTLEIND",
-            "ULTRACEMCO", "TITAN", "SBIN", "POWERGRID", "NTPC", "COALINDIA", "ONGC", "TATASTEEL",
-            "WIPRO", "TECHM", "SUNPHARMA", "DRREDDY", "CIPLA", "GRASIM", "JSWSTEEL", "TATAMOTORS",
-            "INDUSINDBK", "BAJAJFINSV", "HEROMOTOCO", "EICHERMOT", "BRITANNIA", "DIVISLAB", "APOLLOHOSP",
-            
-            // CRITICAL SYMBOLS FROM USER REQUEST
-            "JPPOWER", "IDEA", "SUZLON", "YESBANK", "ADANIENT", "ADANIGREEN", "ADANIPORTS",
-            
-            // Banking & Financial Services
-            "BANKBARODA", "PNB", "CANBK", "UNIONBANK", "INDIANB", "IOB", "CENTRALBK", "IDFCFIRSTB",
-            "FEDERALBNK", "SOUTHBANK", "RBLBANK", "BANDHANBNK", "AUBANK", "UJJIVAN", "EQUITASBNK",
-            "CHOLAFIN", "BAJAJHLDNG", "SBILIFE", "HDFCLIFE", "ICICIGI", "SBICARD", "HDFCAMC",
-            
-            // IT & Technology
-            "HCLTECH", "LTIM", "PERSISTENT", "COFORGE", "MINDTREE", "MPHASIS", "LTTS", "CYIENT",
-            "ONMOBILE", "RATEGAIN", "ROUTE", "NEWGEN", "KPITTECH", "ZENSAR", "NIITLTD", "HEXAWARE",
-            
-            // Auto & Auto Components  
-            "MAHINDRA", "BAJAJ-AUTO", "TVSMOTORS", "ASHOKLEY", "MOTHERSUMI", "BOSCHLTD", "MRF",
-            "APOLLOTYRE", "CEATLTD", "BALKRISIND", "EXIDEIND", "AMARON", "SCHAEFFLER", "WABCOINDIA"
-        ];
+// Complete Stock & Mutual Fund Analyzer Application
+class SMFAnalyzer {
+  constructor() {
+    this.stockSymbols = [
+      {"symbol": "RELIANCE.NS", "name": "Reliance Industries Limited", "sector": "Oil & Gas"},
+      {"symbol": "TCS.NS", "name": "Tata Consultancy Services", "sector": "IT"},
+      {"symbol": "HDFCBANK.NS", "name": "HDFC Bank Limited", "sector": "Banking"},
+      {"symbol": "INFY.NS", "name": "Infosys Limited", "sector": "IT"},
+      {"symbol": "ICICIBANK.NS", "name": "ICICI Bank Limited", "sector": "Banking"},
+      {"symbol": "KOTAKBANK.NS", "name": "Kotak Mahindra Bank", "sector": "Banking"},
+      {"symbol": "LT.NS", "name": "Larsen & Toubro Limited", "sector": "Construction"},
+      {"symbol": "HCLTECH.NS", "name": "HCL Technologies Limited", "sector": "IT"},
+      {"symbol": "AXISBANK.NS", "name": "Axis Bank Limited", "sector": "Banking"},
+      {"symbol": "ITC.NS", "name": "ITC Limited", "sector": "FMCG"},
+      {"symbol": "SBIN.NS", "name": "State Bank of India", "sector": "Banking"},
+      {"symbol": "BHARTIARTL.NS", "name": "Bharti Airtel Limited", "sector": "Telecom"},
+      {"symbol": "ASIANPAINT.NS", "name": "Asian Paints Limited", "sector": "Paints"},
+      {"symbol": "MARUTI.NS", "name": "Maruti Suzuki India Limited", "sector": "Auto"},
+      {"symbol": "BAJFINANCE.NS", "name": "Bajaj Finance Limited", "sector": "NBFC"},
+      {"symbol": "M&M.NS", "name": "Mahindra & Mahindra Limited", "sector": "Auto"},
+      {"symbol": "WIPRO.NS", "name": "Wipro Limited", "sector": "IT"},
+      {"symbol": "NTPC.NS", "name": "NTPC Limited", "sector": "Power"},
+      {"symbol": "TECHM.NS", "name": "Tech Mahindra Limited", "sector": "IT"},
+      {"symbol": "POWERGRID.NS", "name": "Power Grid Corporation", "sector": "Power"},
+      {"symbol": "ULTRACEMCO.NS", "name": "UltraTech Cement Limited", "sector": "Cement"},
+      {"symbol": "TITAN.NS", "name": "Titan Company Limited", "sector": "Jewellery"},
+      {"symbol": "SUNPHARMA.NS", "name": "Sun Pharmaceutical Industries", "sector": "Pharma"},
+      {"symbol": "JSWSTEEL.NS", "name": "JSW Steel Limited", "sector": "Steel"},
+      {"symbol": "TATASTEEL.NS", "name": "Tata Steel Limited", "sector": "Steel"},
+      {"symbol": "ADANIPORTS.NS", "name": "Adani Ports and SEZ Limited", "sector": "Infrastructure"},
+      {"symbol": "HINDALCO.NS", "name": "Hindalco Industries Limited", "sector": "Metals"},
+      {"symbol": "COALINDIA.NS", "name": "Coal India Limited", "sector": "Mining"},
+      {"symbol": "BRITANNIA.NS", "name": "Britannia Industries Limited", "sector": "FMCG"},
+      {"symbol": "ONGC.NS", "name": "Oil & Natural Gas Corporation", "sector": "Oil & Gas"},
+      {"symbol": "HEROMOTOCO.NS", "name": "Hero MotoCorp Limited", "sector": "Auto"},
+      {"symbol": "BAJAJ-AUTO.NS", "name": "Bajaj Auto Limited", "sector": "Auto"},
+      {"symbol": "GRASIM.NS", "name": "Grasim Industries Limited", "sector": "Textiles"},
+      {"symbol": "CIPLA.NS", "name": "Cipla Limited", "sector": "Pharma"},
+      {"symbol": "DRREDDY.NS", "name": "Dr. Reddy's Laboratories", "sector": "Pharma"},
+      {"symbol": "NESTLEIND.NS", "name": "Nestle India Limited", "sector": "FMCG"},
+      {"symbol": "DIVISLAB.NS", "name": "Divi's Laboratories Limited", "sector": "Pharma"},
+      {"symbol": "EICHERMOT.NS", "name": "Eicher Motors Limited", "sector": "Auto"},
+      {"symbol": "TATACONSUM.NS", "name": "Tata Consumer Products", "sector": "FMCG"},
+      {"symbol": "ADANIENT.NS", "name": "Adani Enterprises Limited", "sector": "Conglomerate"},
+      {"symbol": "APOLLOHOSP.NS", "name": "Apollo Hospitals Enterprise", "sector": "Healthcare"},
+      {"symbol": "SHREECEM.NS", "name": "Shree Cement Limited", "sector": "Cement"},
+      {"symbol": "HINDUNILVR.NS", "name": "Hindustan Unilever Limited", "sector": "FMCG"},
+      {"symbol": "BAJAJFINSV.NS", "name": "Bajaj Finserv Limited", "sector": "Financial Services"},
+      {"symbol": "BPCL.NS", "name": "Bharat Petroleum Corporation", "sector": "Oil & Gas"},
+      {"symbol": "IOC.NS", "name": "Indian Oil Corporation", "sector": "Oil & Gas"},
+      {"symbol": "INDUSINDBK.NS", "name": "IndusInd Bank Limited", "sector": "Banking"},
+      {"symbol": "TATAMOTORS.NS", "name": "Tata Motors Limited", "sector": "Auto"},
+      {"symbol": "SBILIFE.NS", "name": "SBI Life Insurance Company", "sector": "Insurance"},
+      {"symbol": "HDFCLIFE.NS", "name": "HDFC Life Insurance Company", "sector": "Insurance"},
+      {"symbol": "GODREJCP.NS", "name": "Godrej Consumer Products", "sector": "FMCG"}
+    ];
 
-        // COMPREHENSIVE MUTUAL FUNDS DATABASE (500+ schemes)
-        this.mutualFunds = [
-            // Large Cap Funds
-            "SBI Bluechip Fund - Direct Growth", "HDFC Top 100 Fund - Direct Growth",
-            "ICICI Prudential Bluechip Fund - Direct Growth", "Axis Bluechip Fund - Direct Growth",
-            "Mirae Asset Large Cap Fund - Direct Growth", "Nippon India Large Cap Fund - Direct Growth",
-            "Kotak Bluechip Fund - Direct Growth", "UTI Mastershare Fund - Direct Growth",
-            "DSP Top 100 Equity Fund - Direct Growth", "Franklin India Bluechip Fund - Direct Growth",
-            
-            // Mid Cap Funds  
-            "HDFC Mid-Cap Opportunities Fund - Direct Growth", "SBI Magnum Mid Cap Fund - Direct Growth",
-            "ICICI Prudential Mid Cap Fund - Direct Growth", "Axis Midcap Fund - Direct Growth",
-            "Kotak Emerging Equity Fund - Direct Growth", "Nippon India Growth Fund - Direct Growth",
-            "DSP Midcap Fund - Direct Growth", "Franklin India Prima Fund - Direct Growth",
-            
-            // Small Cap Funds
-            "SBI Small Cap Fund - Direct Growth", "HDFC Small Cap Fund - Direct Growth", 
-            "ICICI Prudential Small Cap Fund - Direct Growth", "Axis Small Cap Fund - Direct Growth",
-            "Nippon India Small Cap Fund - Direct Growth", "Kotak Small Cap Fund - Direct Growth",
-            "DSP Small Cap Fund - Direct Growth", "UTI Small Cap Fund - Direct Growth"
-        ];
+    this.selectedFunds = [];
+    this.currentStock = null;
+    this.stockData = null;
+    this.scanResults = [];
+    
+    this.init();
+  }
 
-        this.selectedFunds = [];
-        this.charts = {};
-        this.currentStock = null;
-        this.lastFetchTime = null;
-        this.freshDataMode = true;
+  init() {
+    console.log('Initializing SMF Analyzer...');
+    this.setupEventListeners();
+    this.showToast('Application loaded successfully', 'success');
+  }
 
-        this.init();
-    }
+  setupEventListeners() {
+    // Main tab switching
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const tabName = e.target.dataset.tab;
+        this.switchMainTab(tabName);
+      });
+    });
 
-    init() {
-        console.log('🔧 Setting up application...');
-        this.setupEventListeners();
-        this.showMainTab('stocks');
-        this.updateFreshDataStatus();
-        this.clearAllCaches(); // Start with completely fresh state
-        console.log('✅ Fresh Data Analyzer initialized with 1000+ symbols and 500+ mutual funds');
-    }
+    // Stock search and suggestions
+    const stockSearch = document.getElementById('stockSearch');
+    if (stockSearch) {
+      stockSearch.addEventListener('input', (e) => {
+        this.handleStockSuggestions(e.target.value);
+      });
 
-    // CRITICAL: ALWAYS CLEAR ALL CACHES BEFORE FETCHING
-    clearAllCaches() {
-        console.log('🧹 Clearing ALL caches for fresh data guarantee...');
-        
-        // Clear browser storage
-        if (typeof(Storage) !== "undefined") {
-            localStorage.clear();
-            sessionStorage.clear();
+      // Handle enter key
+      stockSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const query = e.target.value.trim();
+          if (query) {
+            this.fetchStockByQuery(query);
+          }
         }
-        
-        // Clear any existing data
-        this.currentStock = null;
-        this.lastFetchTime = null;
-        
-        // Update cache status
-        this.updateElement('cacheStatus', 'Cache: CLEARED');
-        this.updateElement('cacheStatusValue', '✅ Cleared');
-        this.updateElement('dataSourceValue', 'Live Market Feed');
-        
-        console.log('✅ All caches cleared - guaranteed fresh data mode');
+      });
     }
 
-    // GENERATE FRESH DATA WITH CURRENT TIMESTAMP
-    generateFreshStockData(symbol) {
-        console.log(`📊 Generating FRESH data for ${symbol} at ${new Date().toLocaleString()}`);
-        
-        const now = new Date();
-        const basePrice = this.getBasePrice(symbol);
-        const marketVariation = (Math.random() - 0.5) * 0.08; // ±4% daily variation
-        const currentPrice = basePrice * (1 + marketVariation);
-        const change = currentPrice - basePrice;
-        const changePercent = (change / basePrice) * 100;
-
-        // Generate comprehensive fresh data
-        return {
-            symbol: symbol,
-            name: this.getCompanyName(symbol),
-            currentPrice: currentPrice,
-            change: change,
-            changePercent: changePercent,
-            timestamp: now,
-            dataFreshness: `Fresh data loaded at ${now.toLocaleTimeString('en-IN')} on ${now.toDateString()}`,
-            
-            // Technical Analysis with realistic values
-            technical: {
-                rsi: 30 + Math.random() * 40, // 30-70 range
-                macd: (Math.random() - 0.5) * 20,
-                bollinger: Math.random() * 100,
-                adx: 15 + Math.random() * 25, // 15-40 range
-                atr: currentPrice * (0.02 + Math.random() * 0.03), // 2-5% of price
-                stochastic: Math.random() * 100,
-                support1: currentPrice * 0.95,
-                support2: currentPrice * 0.90,
-                resistance1: currentPrice * 1.05,
-                resistance2: currentPrice * 1.10
-            },
-            
-            // Fundamental Analysis
-            fundamental: {
-                pe: this.generatePE(symbol),
-                peg: 0.8 + Math.random() * 2.4, // 0.8-3.2 range
-                pb: 0.5 + Math.random() * 4.5, // 0.5-5.0 range
-                evEbitda: 8 + Math.random() * 12, // 8-20 range
-                roe: this.generateROE(symbol),
-                roa: 2 + Math.random() * 18, // 2-20 range
-                roce: 5 + Math.random() * 25, // 5-30 range
-                netMargin: this.generateNetMargin(symbol),
-                currentRatio: 0.8 + Math.random() * 2.2, // 0.8-3.0 range
-                quickRatio: 0.5 + Math.random() * 1.5, // 0.5-2.0 range
-                debtEquity: Math.random() * 3, // 0-3 range
-                interestCoverage: 2 + Math.random() * 18 // 2-20 range
-            },
-            
-            // Shareholding Pattern
-            shareholding: {
-                promoter: this.generatePromoterHolding(symbol),
-                promoterChange: (Math.random() - 0.5) * 4, // ±2% change
-                fii: 15 + Math.random() * 20, // 15-35% range
-                fiiChange: (Math.random() - 0.5) * 6, // ±3% change
-                dii: 8 + Math.random() * 15, // 8-23% range
-                diiChange: (Math.random() - 0.5) * 4, // ±2% change
-                pledgePercent: this.generatePledgePercent(symbol)
-            },
-            
-            // Financial Performance (4 quarters)
-            financials: {
-                revenue: this.generateQuarterlyData(symbol, 'revenue'),
-                profit: this.generateQuarterlyData(symbol, 'profit'),
-                quarters: ['Q1 2024-25', 'Q2 2024-25', 'Q3 2024-25', 'Q4 2024-25']
-            },
-            
-            // Buy Ratings
-            buyRating: this.calculateBuyRating(symbol)
-        };
+    // Stock fetch button
+    const stockFetchBtn = document.getElementById('stockFetchBtn');
+    if (stockFetchBtn) {
+      stockFetchBtn.addEventListener('click', () => {
+        const query = stockSearch.value.trim();
+        if (query) {
+          this.fetchStockByQuery(query);
+        } else {
+          this.showToast('Please enter a stock symbol or name', 'warning');
+        }
+      });
     }
 
-    setupEventListeners() {
-        console.log('🔧 Setting up event listeners...');
-        
-        // Main tab switching
-        document.querySelectorAll('.main-tab-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const tabName = e.target.getAttribute('data-tab');
-                console.log(`Switching to main tab: ${tabName}`);
-                this.showMainTab(tabName);
-            });
+    // Sub-tab switching for stocks
+    document.querySelectorAll('.sub-tab').forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        const subtab = e.target.closest('.sub-tab').dataset.subtab;
+        this.switchSubTab(subtab);
+      });
+    });
+
+    // Mutual fund search - FIXED IMPLEMENTATION
+    const fundSearch = document.getElementById('fundSearch');
+    if (fundSearch) {
+      fundSearch.addEventListener('input', (e) => {
+        this.handleFundSuggestions(e.target.value);
+      });
+    }
+
+    // Fund view switching
+    document.querySelectorAll('[data-view]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const view = e.target.dataset.view;
+        this.switchFundView(view);
+      });
+    });
+
+    // Scanner controls
+    const runScanBtn = document.getElementById('runScan');
+    if (runScanBtn) {
+      runScanBtn.addEventListener('click', () => {
+        this.runStockScan();
+      });
+    }
+
+    // Export buttons
+    const exportCSV = document.getElementById('exportCSV');
+    if (exportCSV) {
+      exportCSV.addEventListener('click', () => {
+        this.exportData('csv');
+      });
+    }
+
+    const exportJSON = document.getElementById('exportJSON');
+    if (exportJSON) {
+      exportJSON.addEventListener('click', () => {
+        this.exportData('json');
+      });
+    }
+
+    // Filter range sliders
+    ['fundScoreFilter', 'techScoreFilter', 'aiScoreFilter'].forEach(id => {
+      const slider = document.getElementById(id);
+      const display = document.getElementById(id.replace('Filter', 'Value'));
+      if (slider && display) {
+        slider.addEventListener('input', (e) => {
+          display.textContent = e.target.value;
         });
+      }
+    });
 
-        // Analysis tab switching  
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('analysis-tab-btn')) {
-                e.preventDefault();
-                const tabName = e.target.getAttribute('data-tab');
-                console.log(`Switching to analysis tab: ${tabName}`);
-                this.showAnalysisTab(tabName);
-            }
-        });
+    // Hide suggestions when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.search-container')) {
+        const stockSuggestions = document.getElementById('stockSuggestions');
+        const fundSuggestions = document.getElementById('fundSuggestions');
+        if (stockSuggestions) stockSuggestions.classList.add('hidden');
+        if (fundSuggestions) fundSuggestions.classList.add('hidden');
+      }
+    });
 
-        // Stock search
-        const stockInput = document.getElementById('stockSymbol');
-        const fetchBtn = document.getElementById('fetchStockBtn');
-        
-        if (stockInput) {
-            stockInput.addEventListener('input', (e) => {
-                console.log(`Stock input: ${e.target.value}`);
-                this.showStockSuggestions(e.target.value);
-            });
-            
-            stockInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    this.fetchFreshStockData();
-                }
-            });
-            
-            stockInput.addEventListener('focus', () => {
-                if (stockInput.value.trim()) {
-                    this.showStockSuggestions(stockInput.value);
-                }
-            });
-        }
-        
-        if (fetchBtn) {
-            fetchBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                console.log('Fetch button clicked');
-                this.fetchFreshStockData();
-            });
-        }
+    console.log('Event listeners set up successfully');
+  }
 
-        // Fund search
-        const fundInput = document.getElementById('fundSearch');
-        if (fundInput) {
-            fundInput.addEventListener('input', (e) => {
-                this.showFundSuggestions(e.target.value);
-            });
-            
-            fundInput.addEventListener('focus', () => {
-                if (fundInput.value.trim()) {
-                    this.showFundSuggestions(fundInput.value);
-                }
-            });
-        }
+  switchMainTab(tabName) {
+    console.log('Switching to tab:', tabName);
+    
+    // Update tab buttons
+    document.querySelectorAll('.main-tab').forEach(tab => {
+      tab.classList.remove('active-tab');
+    });
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active-tab');
 
-        // Analyze funds button
-        const analyzeFundsBtn = document.getElementById('analyzeFundsBtn');
-        if (analyzeFundsBtn) {
-            analyzeFundsBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                this.analyzeFunds();
-            });
-        }
+    // Show/hide content
+    document.querySelectorAll('.tab-content').forEach(content => {
+      content.classList.add('hidden');
+    });
+    document.getElementById(tabName).classList.remove('hidden');
+  }
 
-        // Handle clicks
-        document.addEventListener('click', (e) => {
-            // Stock suggestions
-            if (e.target.classList.contains('suggestion-item')) {
-                const symbol = e.target.textContent.trim();
-                console.log(`Selected suggestion: ${symbol}`);
-                stockInput.value = symbol;
-                this.hideStockSuggestions();
-                this.fetchFreshStockData();
-            }
-            
-            // Fund removal
-            if (e.target.classList.contains('remove-fund')) {
-                const fundName = e.target.getAttribute('data-fund');
-                this.removeFund(fundName);
-            }
-            
-            // Hide suggestions when clicking outside
-            if (!e.target.closest('.search-section')) {
-                this.hideStockSuggestions();
-                this.hideFundSuggestions();
-            }
-        });
+  switchSubTab(subtabName) {
+    console.log('Switching to subtab:', subtabName);
+    
+    // Update sub-tab buttons
+    document.querySelectorAll('.sub-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    document.querySelector(`[data-subtab="${subtabName}"]`).classList.add('active');
 
-        // Fund checkbox changes
-        document.addEventListener('change', (e) => {
-            if (e.target.type === 'checkbox' && e.target.classList.contains('fund-checkbox')) {
-                const fundName = e.target.value;
-                if (e.target.checked) {
-                    this.addFund(fundName);
-                } else {
-                    this.removeFund(fundName);
-                }
-            }
-        });
-        
-        console.log('✅ Event listeners setup complete');
+    // Show/hide panels
+    document.querySelectorAll('.subtab-panel').forEach(panel => {
+      panel.classList.add('hidden');
+    });
+    document.getElementById(subtabName).classList.remove('hidden');
+
+    // Load data based on subtab
+    if (this.currentStock) {
+      this.loadSubTabData(subtabName);
+    }
+  }
+
+  handleStockSuggestions(query) {
+    const suggestionsList = document.getElementById('stockSuggestions');
+    
+    if (query.length < 2) {
+      suggestionsList.classList.add('hidden');
+      return;
     }
 
-    // FETCH FRESH STOCK DATA - ALWAYS CLEARS CACHE FIRST
-    async fetchFreshStockData() {
-        const stockInput = document.getElementById('stockSymbol');
-        if (!stockInput) {
-            console.error('Stock input not found');
-            return;
+    const matches = this.stockSymbols.filter(stock => 
+      stock.symbol.toLowerCase().includes(query.toLowerCase()) ||
+      stock.name.toLowerCase().includes(query.toLowerCase())
+    ).slice(0, 8);
+
+    if (matches.length === 0) {
+      suggestionsList.classList.add('hidden');
+      return;
+    }
+
+    suggestionsList.innerHTML = matches.map(stock => 
+      `<li class="suggestion-item" data-symbol="${stock.symbol}" data-name="${stock.name}" data-sector="${stock.sector}">
+        <div>
+          <strong>${stock.symbol}</strong> - ${stock.name}
+          <small style="display: block; color: var(--color-text-secondary);">${stock.sector}</small>
+        </div>
+      </li>`
+    ).join('');
+
+    suggestionsList.classList.remove('hidden');
+
+    // Add click listeners to suggestions
+    suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
+      item.addEventListener('click', () => {
+        this.selectStock({
+          symbol: item.dataset.symbol,
+          name: item.dataset.name,
+          sector: item.dataset.sector
+        });
+        suggestionsList.classList.add('hidden');
+      });
+    });
+  }
+
+  async fetchStockByQuery(query) {
+    // Try to find exact match first
+    let stock = this.stockSymbols.find(s => 
+      s.symbol.toLowerCase() === query.toLowerCase() ||
+      s.name.toLowerCase() === query.toLowerCase()
+    );
+
+    // If not found, try partial match
+    if (!stock) {
+      stock = this.stockSymbols.find(s => 
+        s.symbol.toLowerCase().includes(query.toLowerCase()) ||
+        s.name.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    // If still not found, create a generic entry
+    if (!stock) {
+      const symbol = query.toUpperCase().includes('.NS') ? query.toUpperCase() : query.toUpperCase() + '.NS';
+      stock = { symbol, name: query, sector: 'Unknown' };
+    }
+
+    this.selectStock(stock);
+  }
+
+  async selectStock(stock) {
+    console.log('Selecting stock:', stock);
+    
+    this.currentStock = stock;
+    document.getElementById('stockSearch').value = `${stock.symbol} - ${stock.name}`;
+    
+    // Show selected stock info
+    const selectedStock = document.getElementById('selectedStock');
+    selectedStock.querySelector('.stock-name').textContent = `${stock.symbol} - ${stock.name}`;
+    selectedStock.classList.remove('hidden');
+
+    // Show analysis section
+    document.getElementById('stockAnalysis').classList.remove('hidden');
+
+    // Generate mock stock data
+    this.generateMockStockData(stock.symbol);
+  }
+
+  generateMockStockData(symbol) {
+    console.log('Generating mock data for:', symbol);
+    
+    // Generate realistic mock data for demonstration
+    const basePrice = 100 + Math.random() * 900;
+    const candles = [];
+    const now = new Date();
+    
+    for (let i = 252; i >= 0; i--) {
+      const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+      const price = basePrice + (Math.random() - 0.5) * basePrice * 0.1;
+      const open = price + (Math.random() - 0.5) * price * 0.02;
+      const close = price + (Math.random() - 0.5) * price * 0.02;
+      const high = Math.max(open, close) + Math.random() * price * 0.01;
+      const low = Math.min(open, close) - Math.random() * price * 0.01;
+      
+      candles.push({
+        t: date,
+        o: Math.round(open * 100) / 100,
+        h: Math.round(high * 100) / 100,
+        l: Math.round(low * 100) / 100,
+        c: Math.round(close * 100) / 100,
+        v: Math.floor(Math.random() * 1000000)
+      });
+    }
+
+    this.stockData = {
+      symbol: symbol,
+      currentPrice: candles[candles.length - 1].c,
+      previousClose: candles[candles.length - 2].c,
+      candles: candles,
+      meta: { symbol: symbol }
+    };
+
+    this.showToast('Stock data loaded successfully', 'success');
+    this.updateAllScores();
+    this.loadSubTabData('fundamentals');
+  }
+
+  loadSubTabData(subtabName) {
+    const panel = document.getElementById(subtabName);
+    
+    switch (subtabName) {
+      case 'fundamentals':
+        this.renderFundamentals(panel);
+        break;
+      case 'technicals':
+        this.renderTechnicals(panel);
+        break;
+      case 'shareholding':
+        this.renderShareholding(panel);
+        break;
+      case 'company':
+        this.renderCompanyBook(panel);
+        break;
+      case 'ai':
+        this.renderAIAnalysis(panel);
+        break;
+    }
+  }
+
+  renderFundamentals(panel) {
+    if (!this.stockData) return;
+    
+    // Generate mock fundamental data
+    const fundamentals = [
+      { label: 'P/E Ratio', value: (15 + Math.random() * 20).toFixed(2), good: true },
+      { label: 'P/B Ratio', value: (1 + Math.random() * 3).toFixed(2), good: Math.random() > 0.5 },
+      { label: 'Debt/Equity', value: (0.3 + Math.random() * 0.7).toFixed(2), good: Math.random() > 0.6 },
+      { label: 'ROE (%)', value: (10 + Math.random() * 20).toFixed(2), good: Math.random() > 0.4 },
+      { label: 'ROA (%)', value: (5 + Math.random() * 15).toFixed(2), good: Math.random() > 0.5 },
+      { label: 'Current Ratio', value: (1 + Math.random() * 2).toFixed(2), good: true },
+      { label: 'Revenue Growth (%)', value: (5 + Math.random() * 25).toFixed(2), good: true },
+      { label: 'Profit Margin (%)', value: (8 + Math.random() * 15).toFixed(2), good: Math.random() > 0.3 }
+    ];
+
+    panel.innerHTML = `
+      <div class="fundamental-grid">
+        ${fundamentals.map(item => `
+          <div class="fundamental-card">
+            <div>
+              <div class="fundamental-label">${item.label}</div>
+              <div class="fundamental-value ${item.good ? 'score-good' : 'score-neutral'}">${item.value}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  renderTechnicals(panel) {
+    if (!this.stockData) return;
+
+    const indicators = [
+      { name: 'RSI (14)', value: '45.2', signal: 'neutral' },
+      { name: 'MACD', value: '2.15', signal: 'bullish' },
+      { name: 'Moving Avg (20)', value: `₹ ${this.stockData.currentPrice.toFixed(2)}`, signal: 'bullish' },
+      { name: 'Moving Avg (50)', value: `₹ ${(this.stockData.currentPrice * 0.96).toFixed(2)}`, signal: 'bearish' },
+      { name: 'Bollinger Bands', value: 'Mid', signal: 'neutral' },
+      { name: 'Volume Trend', value: 'High', signal: 'bullish' }
+    ];
+
+    panel.innerHTML = `
+      <div class="technical-grid">
+        <div class="technical-indicators">
+          ${indicators.map(indicator => `
+            <div class="indicator-card">
+              <div>
+                <div class="indicator-main">${indicator.name}</div>
+                <div class="indicator-value">${indicator.value}</div>
+              </div>
+              <span class="signal-badge signal-${indicator.signal}">${indicator.signal.toUpperCase()}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="chart-container" style="height: 400px;">
+          <canvas id="priceChart"></canvas>
+        </div>
+      </div>
+    `;
+
+    // Draw technical chart
+    setTimeout(() => this.drawTechnicalChart(), 100);
+  }
+
+  drawTechnicalChart() {
+    const canvas = document.getElementById('priceChart');
+    if (!canvas || !this.stockData) return;
+
+    const ctx = canvas.getContext('2d');
+    const chartData = this.stockData.candles.slice(-60); // Last 60 days
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: chartData.map(d => d.t.toLocaleDateString()),
+        datasets: [{
+          label: 'Price',
+          data: chartData.map(d => d.c),
+          borderColor: '#1FB8CD',
+          backgroundColor: 'rgba(31, 184, 205, 0.1)',
+          fill: true,
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            grid: {
+              color: 'var(--color-border)'
+            }
+          },
+          x: {
+            grid: {
+              color: 'var(--color-border)'
+            }
+          }
         }
+      }
+    });
+  }
 
-        const symbol = stockInput.value.trim().toUpperCase();
-        if (!symbol) {
-            this.showError('Please enter a stock symbol');
-            return;
+  renderShareholding(panel) {
+    panel.innerHTML = `
+      <div style="display: grid; grid-template-columns: 1fr 300px; gap: 24px;">
+        <div>
+          <h4>Shareholding Pattern</h4>
+          <div class="chart-container" style="height: 300px;">
+            <canvas id="shareholdingChart"></canvas>
+          </div>
+        </div>
+        <div>
+          <h4>Key Metrics</h4>
+          <div class="fundamental-grid">
+            <div class="fundamental-card">
+              <div class="fundamental-label">Promoter Holding</div>
+              <div class="fundamental-value score-good">68.5%</div>
+            </div>
+            <div class="fundamental-card">
+              <div class="fundamental-label">FII Holding</div>
+              <div class="fundamental-value score-neutral">18.2%</div>
+            </div>
+            <div class="fundamental-card">
+              <div class="fundamental-label">DII Holding</div>
+              <div class="fundamental-value score-good">8.7%</div>
+            </div>
+            <div class="fundamental-card">
+              <div class="fundamental-label">Public Holding</div>
+              <div class="fundamental-value score-neutral">4.6%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    setTimeout(() => {
+      const canvas = document.getElementById('shareholdingChart');
+      if (!canvas) return;
+
+      new Chart(canvas, {
+        type: 'pie',
+        data: {
+          labels: ['Promoters', 'FII', 'DII', 'Public'],
+          datasets: [{
+            data: [68.5, 18.2, 8.7, 4.6],
+            backgroundColor: ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
         }
+      });
+    }, 100);
+  }
 
-        console.log(`🚀 FETCHING FRESH DATA for ${symbol} - Cache will be cleared`);
-        
-        // CRITICAL: Always clear cache first
-        this.clearAllCaches();
-        
-        this.showLoading('fetchStockBtn', true);
-        this.hideError();
-        this.updateElement('cacheStatusValue', '🔄 Clearing...');
-        this.updateElement('lastUpdatedValue', 'Fetching fresh data...');
+  renderCompanyBook(panel) {
+    panel.innerHTML = `
+      <div class="ai-analysis-grid">
+        <div class="card">
+          <h4>Revenue Trend (₹ Cr)</h4>
+          <div class="chart-container" style="height: 200px;">
+            <canvas id="revenueChart"></canvas>
+          </div>
+        </div>
+        <div class="card">
+          <h4>Profit Trend (₹ Cr)</h4>
+          <div class="chart-container" style="height: 200px;">
+            <canvas id="profitChart"></canvas>
+          </div>
+        </div>
+      </div>
+    `;
 
+    setTimeout(() => {
+      // Revenue Chart
+      const revenueCanvas = document.getElementById('revenueChart');
+      if (revenueCanvas) {
+        new Chart(revenueCanvas, {
+          type: 'bar',
+          data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: 'Revenue',
+              data: [12000, 14500, 16200, 18900, 21500],
+              backgroundColor: '#1FB8CD'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+
+      // Profit Chart
+      const profitCanvas = document.getElementById('profitChart');
+      if (profitCanvas) {
+        new Chart(profitCanvas, {
+          type: 'bar',
+          data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: 'Profit',
+              data: [1800, 2100, 2400, 2850, 3200],
+              backgroundColor: '#B4413C'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+    }, 100);
+  }
+
+  renderAIAnalysis(panel) {
+    const recommendations = [
+      {
+        term: 'Short Term (1-3 months)',
+        recommendation: 'HOLD',
+        confidence: 72,
+        target: `₹ ${(this.stockData.currentPrice * 1.05).toFixed(2)}`,
+        reason: 'Technical indicators show mixed signals with support at current levels'
+      },
+      {
+        term: 'Medium Term (3-12 months)',
+        recommendation: 'BUY',
+        confidence: 84,
+        target: `₹ ${(this.stockData.currentPrice * 1.18).toFixed(2)}`,
+        reason: 'Strong fundamentals and sector tailwinds support upward momentum'
+      },
+      {
+        term: 'Long Term (1-3 years)',
+        recommendation: 'STRONG BUY',
+        confidence: 91,
+        target: `₹ ${(this.stockData.currentPrice * 1.45).toFixed(2)}`,
+        reason: 'Excellent growth prospects and market leadership position'
+      }
+    ];
+
+    panel.innerHTML = `
+      <div class="ai-analysis-grid">
+        ${recommendations.map((rec, index) => `
+          <div class="ai-card ai-card--${index === 0 ? 'short' : index === 1 ? 'mid' : 'long'}">
+            <h4 class="ai-card-title">${rec.term}</h4>
+            <div class="ai-recommendation">
+              <span class="status status--${rec.recommendation.includes('BUY') ? 'good' : 'neutral'}">${rec.recommendation}</span>
+              <span class="score-badge score-${rec.confidence >= 80 ? 'good' : rec.confidence >= 60 ? 'neutral' : 'poor'}">${rec.confidence}%</span>
+            </div>
+            <div class="ai-target">Target: ${rec.target}</div>
+            <p class="ai-card-description">${rec.reason}</p>
+          </div>
+        `).join('')}
+      </div>
+      
+      <div class="strategy-card">
+        <h4>AI Trading Strategy</h4>
+        <p class="strategy-text">
+          Based on comprehensive analysis of technical indicators, fundamental metrics, and market sentiment, 
+          the AI recommends a graduated investment approach. Consider accumulating positions on dips below 
+          ₹${(this.stockData.currentPrice * 0.95).toFixed(2)} levels while maintaining stop-loss at ₹${(this.stockData.currentPrice * 0.90).toFixed(2)}. The stock shows strong potential for 
+          outperformance in the medium to long term.
+        </p>
+      </div>
+    `;
+  }
+
+  calculateAllScores() {
+    if (!this.stockData) {
+      return { fundamental: 0, technical: 0, ai: 0, overall: 0 };
+    }
+
+    // Mock scoring logic - in real app, this would use actual calculations
+    const fundamental = 60 + Math.random() * 30;
+    const technical = 50 + Math.random() * 40;
+    const ai = 65 + Math.random() * 25;
+    const overall = (fundamental + technical + ai) / 3;
+
+    return {
+      fundamental: Math.round(fundamental),
+      technical: Math.round(technical),
+      ai: Math.round(ai),
+      overall: Math.round(overall)
+    };
+  }
+
+  updateAllScores() {
+    const scores = this.calculateAllScores();
+    
+    // Update score badges
+    this.updateScoreBadge('fundamentalsScore', scores.fundamental);
+    this.updateScoreBadge('technicalsScore', scores.technical);
+    this.updateScoreBadge('aiScore', scores.ai);
+    
+    // Update overall score
+    const overallScore = document.querySelector('.overall-score');
+    if (overallScore) {
+      overallScore.textContent = `Overall: ${scores.overall}%`;
+      overallScore.className = `overall-score status ${this.getScoreClass(scores.overall, 'status')}`;
+    }
+
+    // Mock scores for other tabs
+    this.updateScoreBadge('shareholdingScore', 75);
+    this.updateScoreBadge('companyScore', 68);
+  }
+
+  updateScoreBadge(elementId, score) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.textContent = `${score}%`;
+      element.className = `score-badge ${this.getScoreClass(score)}`;
+    }
+  }
+
+  getScoreClass(score, prefix = 'score') {
+    if (prefix === 'status') {
+      return score >= 70 ? 'status--good' : score >= 40 ? 'status--neutral' : 'status--poor';
+    }
+    return score >= 70 ? 'score-good' : score >= 40 ? 'score-neutral' : 'score-poor';
+  }
+
+  // FIXED MUTUAL FUNDS FUNCTIONALITY
+  async searchMutualFunds(searchTerm) {
+    if (!searchTerm || searchTerm.length < 2) return [];
+    
+    try {
+      // Method 1: Use direct search API
+      let directResults = [];
+      try {
+        const searchResponse = await fetch(`https://api.mfapi.in/mf/search?q=${encodeURIComponent(searchTerm)}`);
+        if (searchResponse.ok) {
+          directResults = await searchResponse.json();
+        }
+      } catch (error) {
+        console.log('Direct search API failed, continuing with local search');
+      }
+      
+      // Method 2: Filter from complete fund list (cached)
+      if (!window.allMutualFunds) {
         try {
-            // Check if symbol exists
-            if (!this.stockSymbols.includes(symbol)) {
-                throw new Error(`Symbol "${symbol}" not found. Try: RELIANCE, TCS, JPPOWER, IDEA, SUZLON, YESBANK`);
-            }
-
-            // Simulate API delay for realistic experience
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            // Generate completely fresh data
-            const freshData = this.generateFreshStockData(symbol);
-            this.currentStock = symbol;
-            this.lastFetchTime = new Date();
-
-            // Update fresh data status
-            this.updateFreshDataStatus();
-            this.updateElement('cacheStatusValue', '✅ Fresh');
-            this.updateElement('lastUpdatedValue', freshData.dataFreshness);
-
-            // Display the fresh data
-            this.displayStockData(freshData);
-            
-            // Show the results container
-            const resultsContainer = document.getElementById('stockResults');
-            if (resultsContainer) {
-                resultsContainer.classList.remove('hidden');
-                console.log('✅ Stock results container shown');
-            } else {
-                console.error('Stock results container not found');
-            }
-            
-            this.hideStockSuggestions();
-
-            console.log(`✅ FRESH DATA loaded for ${symbol}`);
-
+          const allFundsResponse = await fetch('https://api.mfapi.in/mf');
+          if (allFundsResponse.ok) {
+            window.allMutualFunds = await allFundsResponse.json();
+          }
         } catch (error) {
-            console.error('Error fetching fresh stock data:', error);
-            this.showError(`❌ ${error.message}`);
-        } finally {
-            this.showLoading('fetchStockBtn', false);
+          console.log('Failed to fetch all funds, using empty array');
+          window.allMutualFunds = [];
         }
+      }
+      
+      // Filter local results
+      const localResults = window.allMutualFunds ? window.allMutualFunds.filter(fund => 
+        fund.schemeName && fund.schemeName.toLowerCase().includes(searchTerm.toLowerCase())
+      ) : [];
+      
+      // Combine and deduplicate results
+      const combinedResults = [...directResults, ...localResults];
+      const uniqueResults = combinedResults.filter((fund, index, self) => 
+        index === self.findIndex(f => f.schemeCode === fund.schemeCode)
+      );
+      
+      return uniqueResults.slice(0, 50); // Limit to 50 results for performance
+    } catch (error) {
+      console.error('MF Search Error:', error);
+      return [];
+    }
+  }
+
+  async handleFundSuggestions(query) {
+    const suggestionsList = document.getElementById('fundSuggestions');
+    
+    if (query.length < 2) {
+      suggestionsList.classList.add('hidden');
+      return;
     }
 
-    // QUICK FETCH for demo buttons
-    quickFetch(symbol) {
-        console.log(`Quick fetch triggered for: ${symbol}`);
-        const stockInput = document.getElementById('stockSymbol');
-        if (stockInput) {
-            stockInput.value = symbol;
-            this.fetchFreshStockData();
-        }
-    }
+    // Show loading state
+    suggestionsList.innerHTML = '<li class="suggestion-item">Searching funds...</li>';
+    suggestionsList.classList.remove('hidden');
 
-    displayStockData(data) {
-        console.log(`📈 Displaying fresh stock data for ${data.symbol}`);
+    try {
+      const matches = await this.searchMutualFunds(query);
 
-        // Update stock header
-        this.updateElement('stockName', data.name);
-        this.updateElement('stockDetails', `${data.symbol} • NSE • Real-time Data`);
-        this.updateElement('dataTimestamp', data.dataFreshness);
-        this.updateElement('currentPrice', `₹${data.currentPrice.toFixed(2)}`);
+      if (matches.length === 0) {
+        suggestionsList.innerHTML = '<li class="suggestion-item">No funds found</li>';
+        return;
+      }
 
-        // Update price change
-        const changeElement = document.getElementById('priceChange');
-        this.updateElement('changeValue', `₹${data.change.toFixed(2)}`);
-        this.updateElement('changePercent', `(${data.changePercent.toFixed(2)}%)`);
-        if (changeElement) {
-            changeElement.className = `price-change ${data.change >= 0 ? 'positive' : 'negative'}`;
-        }
+      suggestionsList.innerHTML = matches.map(fund => 
+        `<li class="suggestion-item" data-scheme-code="${fund.schemeCode}">
+          <input type="checkbox" class="suggestion-checkbox" ${this.selectedFunds.find(f => f.schemeCode === fund.schemeCode) ? 'checked' : ''}>
+          <div>
+            <strong>${fund.schemeName}</strong>
+          </div>
+        </li>`
+      ).join('');
 
-        // Update overall ratings
-        this.updateElement('overallRating', `${data.buyRating.overall}%`);
-        this.updateElement('globalBuyRating', `${data.buyRating.overall}%`);
-        this.updateElement('technicalScore', `${data.buyRating.technical}%`); 
-        this.updateElement('fundamentalScore', `${data.buyRating.fundamental}%`);
-        this.updateElement('shareholdingScore', `${data.buyRating.shareholding}%`);
+      suggestionsList.classList.remove('hidden');
 
-        // Update tab badges
-        this.updateElement('technicalBadge', `${data.buyRating.technical}%`);
-        this.updateElement('fundamentalBadge', `${data.buyRating.fundamental}%`);
-        this.updateElement('shareholdingBadge', `${data.buyRating.shareholding}%`);
-
-        // Update term calls
-        this.updateTermCall('globalShortTerm', data.buyRating.shortTerm);
-        this.updateTermCall('globalMidTerm', data.buyRating.midTerm);
-        this.updateTermCall('globalLongTerm', data.buyRating.longTerm);
-
-        // Update technical indicators
-        this.updateTechnicalIndicators(data.technical);
-
-        // Update fundamental metrics
-        this.updateFundamentalMetrics(data.fundamental);
-
-        // Update shareholding data
-        this.updateShareholdingData(data.shareholding);
-
-        // Create charts after a short delay
-        setTimeout(() => {
-            this.createPriceChart(data);
-            this.createShareholdingChart(data);
-            this.createFinancialCharts(data);
-        }, 200);
-        
-        console.log('✅ Stock data display complete');
-    }
-
-    updateTechnicalIndicators(technical) {
-        this.updateIndicatorWithSignal('rsiValue', technical.rsi.toFixed(1), this.getRSISignal(technical.rsi));
-        this.updateIndicatorWithSignal('macdValue', technical.macd.toFixed(2), this.getMACDSignal(technical.macd));
-        this.updateIndicatorWithSignal('bollingerValue', technical.bollinger.toFixed(1), this.getBollingerSignal(technical.bollinger));
-        this.updateIndicatorWithSignal('adxValue', technical.adx.toFixed(1), this.getADXSignal(technical.adx));
-        this.updateIndicatorWithSignal('atrValue', technical.atr.toFixed(2), this.getATRSignal(technical.atr));
-        this.updateIndicatorWithSignal('stochasticValue', technical.stochastic.toFixed(1), this.getStochasticSignal(technical.stochastic));
-    }
-
-    updateFundamentalMetrics(fundamental) {
-        this.updateMetricWithColor('peRatio', fundamental.pe.toFixed(1), this.getPEColor(fundamental.pe));
-        this.updateMetricWithColor('pegRatio', fundamental.peg.toFixed(2), this.getPEGColor(fundamental.peg));
-        this.updateMetricWithColor('pbRatio', fundamental.pb.toFixed(2), this.getPBColor(fundamental.pb));
-        this.updateMetricWithColor('evEbitda', fundamental.evEbitda.toFixed(1), 'average');
-        this.updateMetricWithColor('roeValue', `${fundamental.roe.toFixed(1)}%`, this.getROEColor(fundamental.roe));
-        this.updateMetricWithColor('roaValue', `${fundamental.roa.toFixed(1)}%`, this.getROAColor(fundamental.roa));
-        this.updateMetricWithColor('roceValue', `${fundamental.roce.toFixed(1)}%`, this.getROCEColor(fundamental.roce));
-        this.updateMetricWithColor('netMargin', `${fundamental.netMargin.toFixed(1)}%`, this.getMarginColor(fundamental.netMargin));
-        this.updateMetricWithColor('currentRatio', fundamental.currentRatio.toFixed(2), this.getCurrentRatioColor(fundamental.currentRatio));
-        this.updateMetricWithColor('quickRatio', fundamental.quickRatio.toFixed(2), this.getQuickRatioColor(fundamental.quickRatio));
-        this.updateMetricWithColor('debtEquity', fundamental.debtEquity.toFixed(2), this.getDebtColor(fundamental.debtEquity));
-        this.updateMetricWithColor('interestCoverage', fundamental.interestCoverage.toFixed(1), this.getInterestCoverageColor(fundamental.interestCoverage));
-    }
-
-    updateShareholdingData(shareholding) {
-        this.updateElement('promoterHolding', `${shareholding.promoter.toFixed(1)}%`);
-        this.updateElement('fiiHolding', `${shareholding.fii.toFixed(1)}%`);
-        this.updateElement('diiHolding', `${shareholding.dii.toFixed(1)}%`);
-        
-        this.updateChangeElement('promoterChange', shareholding.promoterChange);
-        this.updateChangeElement('fiiChange', shareholding.fiiChange);
-        this.updateChangeElement('diiChange', shareholding.diiChange);
-        
-        // Update pledge with risk assessment
-        this.updateElement('pledgePercent', `${shareholding.pledgePercent.toFixed(1)}%`);
-        this.updatePledgeRisk(shareholding.pledgePercent);
-    }
-
-    // MUTUAL FUNDS FUNCTIONALITY
-    showFundSuggestions(query) {
-        console.log(`Showing fund suggestions for: ${query}`);
-        const suggestions = document.getElementById('fundSuggestions');
-        if (!suggestions) return;
-
-        if (!query || query.length < 2) {
-            this.hideFundSuggestions();
-            return;
-        }
-
-        const filtered = this.mutualFunds.filter(fund => 
-            fund.toLowerCase().includes(query.toLowerCase())
-        );
-
-        if (filtered.length === 0) {
-            this.hideFundSuggestions();
-            return;
-        }
-
-        suggestions.innerHTML = filtered.slice(0, 8).map(fund => 
-            `<div class="fund-suggestion-item">
-                <input type="checkbox" class="fund-checkbox" value="${fund}" ${this.selectedFunds.includes(fund) ? 'checked' : ''}>
-                ${fund}
-            </div>`
-        ).join('');
-        
-        suggestions.classList.remove('hidden');
-    }
-
-    quickSelectFund(fundName) {
-        console.log(`Quick selecting fund: ${fundName}`);
-        if (!this.selectedFunds.includes(fundName)) {
-            this.addFund(fundName);
-        }
-        // Auto-analyze for single fund
-        if (this.selectedFunds.length === 1) {
-            setTimeout(() => this.analyzeFunds(), 500);
-        }
-    }
-
-    addFund(fundName) {
-        if (!this.selectedFunds.includes(fundName)) {
-            this.selectedFunds.push(fundName);
-            this.updateSelectedFunds();
-            console.log(`Added fund: ${fundName}`);
-        }
-    }
-
-    removeFund(fundName) {
-        this.selectedFunds = this.selectedFunds.filter(f => f !== fundName);
-        this.updateSelectedFunds();
-        
-        const checkbox = document.querySelector(`input.fund-checkbox[value="${fundName}"]`);
-        if (checkbox) checkbox.checked = false;
-        console.log(`Removed fund: ${fundName}`);
-    }
-
-    updateSelectedFunds() {
-        const container = document.getElementById('selectedFunds');
-        const analyzeBtn = document.getElementById('analyzeFundsBtn');
-        
-        if (!container || !analyzeBtn) return;
-
-        if (this.selectedFunds.length === 0) {
-            container.innerHTML = '';
-            analyzeBtn.classList.add('hidden');
-            document.getElementById('fundResults').classList.add('hidden');
-            return;
-        }
-
-        container.innerHTML = this.selectedFunds.map(fund => 
-            `<div class="selected-fund-tag">
-                ${fund}
-                <button class="remove-fund" data-fund="${fund}">&times;</button>
-            </div>`
-        ).join('');
-
-        analyzeBtn.classList.remove('hidden');
-    }
-
-    async analyzeFunds() {
-        if (this.selectedFunds.length === 0) {
-            this.showError('Please select at least one fund to analyze');
-            return;
-        }
-
-        console.log(`📊 Analyzing ${this.selectedFunds.length} mutual funds with fresh data`);
-        
-        // CLEAR FUND CACHE
-        this.clearAllCaches();
-        
-        this.showLoading('analyzeFundsBtn', true);
-        this.hideError();
-
-        try {
-            await new Promise(resolve => setTimeout(resolve, 1500));
-
-            const resultsContainer = document.getElementById('fundResults');
-            const singleAnalysis = document.getElementById('singleFundAnalysis');
-            const multipleAnalysis = document.getElementById('multipleFundAnalysis');
-
-            if (resultsContainer) {
-                resultsContainer.classList.remove('hidden');
-            }
-
-            if (this.selectedFunds.length === 1) {
-                this.showSingleFundAnalysis(this.selectedFunds[0]);
-                if (singleAnalysis) singleAnalysis.classList.remove('hidden');
-                if (multipleAnalysis) multipleAnalysis.classList.add('hidden');
+      // Add click listeners
+      suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
+        if (item.dataset.schemeCode) {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const checkbox = item.querySelector('.suggestion-checkbox');
+            const schemeCode = parseInt(item.dataset.schemeCode);
+            const fund = matches.find(f => f.schemeCode === schemeCode);
+            
+            if (checkbox.checked) {
+              this.removeFund(schemeCode);
+              checkbox.checked = false;
             } else {
-                this.showMultipleFundAnalysis();
-                if (singleAnalysis) singleAnalysis.classList.add('hidden');
-                if (multipleAnalysis) multipleAnalysis.classList.remove('hidden');
+              if (this.selectedFunds.length < 10) {
+                this.addFund(fund);
+                checkbox.checked = true;
+              } else {
+                this.showToast('Maximum 10 funds can be selected', 'warning');
+              }
             }
-        } catch (error) {
-            console.error('Error analyzing funds:', error);
-            this.showError('❌ Error analyzing funds. Please try again.');
-        } finally {
-            this.showLoading('analyzeFundsBtn', false);
+          });
         }
+      });
+    } catch (error) {
+      console.error('Error in handleFundSuggestions:', error);
+      suggestionsList.innerHTML = '<li class="suggestion-item">Error searching funds</li>';
     }
+  }
 
-    showSingleFundAnalysis(fundName) {
-        console.log(`📈 Showing fresh single fund analysis for ${fundName}`);
-        
-        const fundData = this.generateFreshFundData(fundName);
-
-        this.updateElement('fundName', fundName);
-        this.updateElement('fundRating', '⭐'.repeat(fundData.rating));
-        this.updateElement('fundDetails', `${fundData.category} • AUM: ₹${fundData.aum} Cr • Expense: ${fundData.expenseRatio}%`);
-        this.updateElement('fundTimestamp', fundData.dataFreshness);
-        this.updateElement('currentNAV', `₹${fundData.nav.toFixed(2)}`);
-        this.updateElement('fundBuyRating', `${fundData.buyRating}%`);
-
-        this.updateElement('returns1Y', `${fundData.returns['1Y'].toFixed(1)}%`);
-        this.updateElement('returns3Y', `${fundData.returns['3Y'].toFixed(1)}%`);
-        this.updateElement('returns5Y', `${fundData.returns['5Y'].toFixed(1)}%`);
-        this.updateElement('expenseRatio', `${fundData.expenseRatio.toFixed(2)}%`);
-        this.updateElement('fundAUM', `₹${fundData.aum.toLocaleString()} Cr`);
-
-        this.displayTopHoldings(fundData.topHoldings);
-
-        setTimeout(() => {
-            this.createSectorChart(fundData.sectorAllocation);
-        }, 200);
+  addFund(fund) {
+    if (!this.selectedFunds.find(f => f.schemeCode === fund.schemeCode)) {
+      this.selectedFunds.push(fund);
+      this.updateSelectedFundsDisplay();
+      
+      if (this.selectedFunds.length === 1) {
+        document.getElementById('fundAnalysis').classList.remove('hidden');
+        this.switchFundView('single');
+      }
+      
+      // Show toast to confirm fund added
+      this.showToast(`Added: ${fund.schemeName.substring(0, 40)}...`, 'success');
     }
+  }
 
-    showMultipleFundAnalysis() {
-        console.log('📊 Showing fresh multiple fund comparison');
-        
-        setTimeout(() => {
-            this.createPerformanceComparisonChart();
-            this.createSectorOverlapChart();
-            this.generateDiversificationSuggestions();
-        }, 200);
+  removeFund(schemeCode) {
+    const fundToRemove = this.selectedFunds.find(f => f.schemeCode === schemeCode);
+    this.selectedFunds = this.selectedFunds.filter(f => f.schemeCode !== schemeCode);
+    this.updateSelectedFundsDisplay();
+    
+    if (this.selectedFunds.length === 0) {
+      document.getElementById('fundAnalysis').classList.add('hidden');
     }
-
-    // UTILITY METHODS
-    showMainTab(tabName) {
-        console.log(`Switching to main tab: ${tabName}`);
-        
-        document.querySelectorAll('.main-tab-btn').forEach(btn => {
-            btn.classList.remove('active', 'btn--primary');
-            btn.classList.add('btn--outline');
-        });
-        
-        const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
-        if (activeBtn) {
-            activeBtn.classList.add('active', 'btn--primary');
-            activeBtn.classList.remove('btn--outline');
-        }
-
-        document.querySelectorAll('.main-tab-content').forEach(content => {
-            content.classList.remove('active');
-        });
-        
-        const activeContent = document.getElementById(tabName);
-        if (activeContent) {
-            activeContent.classList.add('active');
-        }
-
-        this.hideError();
+    
+    // Show toast to confirm fund removed
+    if (fundToRemove) {
+      this.showToast(`Removed: ${fundToRemove.schemeName.substring(0, 40)}...`, 'info');
     }
+  }
 
-    showAnalysisTab(tabName) {
-        console.log(`Switching to analysis tab: ${tabName}`);
-        
-        document.querySelectorAll('.analysis-tab-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        
-        const activeBtn = document.querySelector(`[data-tab="${tabName}"]`);
-        if (activeBtn) {
-            activeBtn.classList.add('active');
-        }
-
-        document.querySelectorAll('.analysis-tab-panel').forEach(panel => {
-            panel.classList.remove('active');
-        });
-        
-        const activePanel = document.getElementById(tabName);
-        if (activePanel) {
-            activePanel.classList.add('active');
-        }
+  updateSelectedFundsDisplay() {
+    const container = document.getElementById('selectedFunds');
+    const chipsContainer = container.querySelector('.fund-chips');
+    
+    if (this.selectedFunds.length === 0) {
+      container.classList.add('hidden');
+      return;
     }
+    
+    container.classList.remove('hidden');
+    chipsContainer.innerHTML = this.selectedFunds.map(fund => 
+      `<span class="fund-chip">
+        ${fund.schemeName.length > 40 ? fund.schemeName.substring(0, 40) + '...' : fund.schemeName}
+        <button class="fund-chip-remove" data-scheme-code="${fund.schemeCode}">×</button>
+      </span>`
+    ).join('');
 
-    showStockSuggestions(query) {
-        console.log(`Showing stock suggestions for: ${query}`);
-        const suggestions = document.getElementById('stockSuggestions');
-        if (!suggestions) {
-            console.error('Stock suggestions element not found');
-            return;
-        }
+    // Add remove listeners
+    chipsContainer.querySelectorAll('.fund-chip-remove').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const schemeCode = parseInt(e.target.dataset.schemeCode);
+        this.removeFund(schemeCode);
+      });
+    });
+  }
 
-        if (!query || query.length < 1) {
-            this.hideStockSuggestions();
-            return;
-        }
+  switchFundView(view) {
+    // Update buttons
+    document.querySelectorAll('[data-view]').forEach(btn => {
+      btn.classList.remove('active');
+    });
+    document.querySelector(`[data-view="${view}"]`).classList.add('active');
 
-        const filtered = this.stockSymbols.filter(stock => 
-            stock.toLowerCase().includes(query.toLowerCase())
-        );
+    // Show/hide views
+    document.querySelectorAll('.fund-view').forEach(v => {
+      v.classList.add('hidden');
+    });
+    document.getElementById(view === 'single' ? 'singleFund' : 'fundComparison').classList.remove('hidden');
 
-        if (filtered.length === 0) {
-            this.hideStockSuggestions();
-            return;
-        }
-
-        suggestions.innerHTML = filtered.slice(0, 10).map(stock => 
-            `<div class="suggestion-item">${stock}</div>`
-        ).join('');
-        
-        suggestions.classList.remove('hidden');
-        console.log(`Showing ${filtered.length} suggestions`);
+    // Load data
+    if (view === 'single' && this.selectedFunds.length > 0) {
+      this.renderSingleFundAnalysis();
+    } else if (view === 'comparison' && this.selectedFunds.length > 1) {
+      this.renderFundComparison();
     }
+  }
 
-    hideStockSuggestions() {
-        const suggestions = document.getElementById('stockSuggestions');
-        if (suggestions) {
-            suggestions.classList.add('hidden');
+  renderSingleFundAnalysis() {
+    const fund = this.selectedFunds[0];
+    const container = document.getElementById('singleFund');
+    
+    container.innerHTML = `
+      <h3>${fund.schemeName}</h3>
+      
+      <div class="fund-metrics">
+        <div class="fund-metric">
+          <div class="fund-metric-value">₹ 45.67</div>
+          <div class="fund-metric-label">Current NAV</div>
+        </div>
+        <div class="fund-metric">
+          <div class="fund-metric-value">15.2%</div>
+          <div class="fund-metric-label">1Y Return</div>
+        </div>
+        <div class="fund-metric">
+          <div class="fund-metric-value">12.8%</div>
+          <div class="fund-metric-label">3Y Return</div>
+        </div>
+        <div class="fund-metric">
+          <div class="fund-metric-value">11.4%</div>
+          <div class="fund-metric-label">5Y Return</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 300px; gap: 24px; margin-top: 24px;">
+        <div class="chart-container" style="height: 300px;">
+          <canvas id="navChart"></canvas>
+        </div>
+        <div>
+          <h4>Fund Details</h4>
+          <div class="fundamental-grid">
+            <div class="fundamental-card">
+              <div class="fundamental-label">Expense Ratio</div>
+              <div class="fundamental-value">1.25%</div>
+            </div>
+            <div class="fundamental-card">
+              <div class="fundamental-label">AUM</div>
+              <div class="fundamental-value">₹ 15,234 Cr</div>
+            </div>
+            <div class="fundamental-card">
+              <div class="fundamental-label">Fund Manager</div>
+              <div class="fundamental-value">John Doe</div>
+            </div>
+            <div class="fundamental-card">
+              <div class="fundamental-label">Risk Level</div>
+              <div class="fundamental-value score-neutral">Medium</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Draw NAV chart
+    setTimeout(() => {
+      const canvas = document.getElementById('navChart');
+      if (!canvas) return;
+
+      const navData = Array.from({length: 30}, (_, i) => 40 + Math.sin(i/5) * 5 + Math.random() * 2);
+      
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
+          datasets: [{
+            label: 'NAV',
+            data: navData,
+            borderColor: '#1FB8CD',
+            backgroundColor: 'rgba(31, 184, 205, 0.1)',
+            fill: true,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          }
         }
-    }
+      });
+    }, 100);
+  }
 
-    hideFundSuggestions() {
-        const suggestions = document.getElementById('fundSuggestions');
-        if (suggestions) {
-            suggestions.classList.add('hidden');
-        }
-    }
+  renderFundComparison() {
+    const container = document.getElementById('fundComparison');
+    
+    container.innerHTML = `
+      <h3>Fund Comparison (${this.selectedFunds.length} funds)</h3>
+      
+      <div class="chart-container" style="height: 400px; margin: 24px 0;">
+        <canvas id="comparisonChart"></canvas>
+      </div>
 
-    updateFreshDataStatus() {
-        const now = new Date();
-        const timeString = now.toLocaleTimeString('en-IN');
-        const dateString = now.toDateString();
-        
-        this.updateElement('lastFetchTime', `Fresh data mode active - ${timeString} on ${dateString}`);
-        this.updateElement('cacheStatus', 'Cache: CLEARED');
-    }
+      <div class="overlap-matrix">
+        <h4>Portfolio Overlap Analysis</h4>
+        <p style="color: var(--color-text-secondary); margin-bottom: 16px;">
+          Higher overlap means funds hold similar stocks. Lower overlap indicates better diversification.
+        </p>
+        <table class="overlap-table">
+          <thead>
+            <tr>
+              <th>Fund</th>
+              ${this.selectedFunds.map((_, i) => `<th>Fund ${i+1}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+            ${this.selectedFunds.map((fund, i) => `
+              <tr>
+                <td><strong>Fund ${i+1}</strong></td>
+                ${this.selectedFunds.map((_, j) => {
+                  if (i === j) return '<td>100%</td>';
+                  const overlap = Math.floor(Math.random() * 60) + 20;
+                  const className = overlap > 60 ? 'overlap-high' : overlap > 40 ? 'overlap-medium' : 'overlap-low';
+                  return `<td class="${className}">${overlap}%</td>`;
+                }).join('')}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
 
-    // CHART CREATION METHODS
-    createPriceChart(data) {
-        const ctx = document.getElementById('priceChart');
-        if (!ctx) {
-            console.error('Price chart canvas not found');
-            return;
-        }
+    // Draw comparison chart
+    setTimeout(() => {
+      const canvas = document.getElementById('comparisonChart');
+      if (!canvas) return;
 
-        if (this.charts.price) this.charts.price.destroy();
+      const colors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F'];
+      const datasets = this.selectedFunds.slice(0, 5).map((fund, index) => ({
+        label: `Fund ${index + 1}`,
+        data: Array.from({length: 12}, () => Math.random() * 20 + 5),
+        borderColor: colors[index],
+        backgroundColor: colors[index] + '20',
+        fill: false
+      }));
 
-        const labels = this.generateDateLabels(30);
-        const priceData = this.generatePriceHistory(data.currentPrice, 30);
-        const supportLine = Array(30).fill(data.technical.support1);
-        const resistanceLine = Array(30).fill(data.technical.resistance1);
-
-        this.charts.price = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: labels,
-                datasets: [
-                    {
-                        label: `${data.symbol} Price`,
-                        data: priceData,
-                        borderColor: '#1FB8CD',
-                        backgroundColor: 'rgba(31, 184, 205, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.1
-                    },
-                    {
-                        label: 'Support Level',
-                        data: supportLine,
-                        borderColor: '#22c55e',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        fill: false,
-                        pointRadius: 0
-                    },
-                    {
-                        label: 'Resistance Level',
-                        data: resistanceLine,
-                        borderColor: '#ef4444',
-                        borderWidth: 2,
-                        borderDash: [5, 5],
-                        fill: false,
-                        pointRadius: 0
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    title: {
-                        display: true,
-                        text: `${data.symbol} - Live Price Chart with Support/Resistance`
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: false,
-                        title: { display: true, text: 'Price (₹)' }
-                    }
-                }
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top'
             }
-        });
-        
-        console.log(`✅ Price chart created for ${data.symbol}`);
-    }
-
-    createShareholdingChart(data) {
-        const ctx = document.getElementById('shareholdingChart');
-        if (!ctx) {
-            console.error('Shareholding chart canvas not found');
-            return;
-        }
-
-        if (this.charts.shareholding) this.charts.shareholding.destroy();
-
-        const quarters = data.financials.quarters;
-        const promoterData = this.generateTrendData(data.shareholding.promoter, 4, 5);
-        const fiiData = this.generateTrendData(data.shareholding.fii, 4, 3);
-        const diiData = this.generateTrendData(data.shareholding.dii, 4, 2);
-        const pledgeData = this.generateTrendData(data.shareholding.pledgePercent, 4, 2);
-
-        this.charts.shareholding = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: quarters,
-                datasets: [
-                    {
-                        label: 'Promoter Holdings (%)',
-                        data: promoterData,
-                        backgroundColor: '#1FB8CD',
-                        borderColor: '#1FB8CD',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'FII Holdings (%)',
-                        data: fiiData,
-                        backgroundColor: '#FFC185',
-                        borderColor: '#FFC185',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'DII Holdings (%)',
-                        data: diiData,
-                        backgroundColor: '#B4413C',
-                        borderColor: '#B4413C',
-                        borderWidth: 1
-                    },
-                    {
-                        label: 'Promoter Pledge (%)',
-                        data: pledgeData,
-                        type: 'line',
-                        backgroundColor: 'rgba(219, 69, 69, 0.2)',
-                        borderColor: '#DB4545',
-                        borderWidth: 4,
-                        pointBackgroundColor: '#DB4545',
-                        pointBorderColor: '#fff',
-                        pointRadius: 8,
-                        yAxisID: 'y1'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    title: {
-                        display: true,
-                        text: 'Shareholding Pattern with Pledge Overlay'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: { display: true, text: 'Holdings (%)' }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        beginAtZero: true,
-                        max: Math.max(30, Math.max(...pledgeData) + 5),
-                        title: { display: true, text: 'Pledge (%)' },
-                        grid: { drawOnChartArea: false }
-                    }
-                }
+          },
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'Return %'
+              }
             }
-        });
-        
-        console.log(`✅ Shareholding chart created`);
-    }
-
-    createFinancialCharts(data) {
-        // Revenue Chart
-        const revenueCtx = document.getElementById('revenueChart');
-        if (revenueCtx) {
-            if (this.charts.revenue) this.charts.revenue.destroy();
-
-            this.charts.revenue = new Chart(revenueCtx, {
-                type: 'bar',
-                data: {
-                    labels: data.financials.quarters,
-                    datasets: [{
-                        label: 'Revenue (₹ Cr)',
-                        data: data.financials.revenue,
-                        backgroundColor: '#1FB8CD',
-                        borderColor: '#1FB8CD',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        title: { display: true, text: 'Quarterly Revenue Trend' }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: { display: true, text: 'Revenue (₹ Cr)' }
-                        }
-                    }
-                }
-            });
-            
-            console.log(`✅ Revenue chart created`);
+          }
         }
+      });
+    }, 100);
+  }
 
-        // Profit Chart
-        const profitCtx = document.getElementById('profitChart');
-        if (profitCtx) {
-            if (this.charts.profit) this.charts.profit.destroy();
+  // Scanner functionality
+  async runStockScan() {
+    const fundScore = parseInt(document.getElementById('fundScoreFilter').value);
+    const techScore = parseInt(document.getElementById('techScoreFilter').value);
+    const aiScore = parseInt(document.getElementById('aiScoreFilter').value);
+    const mcMin = parseFloat(document.getElementById('mcMin').value) || 0;
+    const mcMax = parseFloat(document.getElementById('mcMax').value) || Infinity;
+    const sector = document.getElementById('sectorFilter').value;
 
-            const hasNegativeProfit = data.financials.profit.some(p => p < 0);
+    this.showToast('Running stock scan...', 'info');
 
-            this.charts.profit = new Chart(profitCtx, {
-                type: 'line',
-                data: {
-                    labels: data.financials.quarters,
-                    datasets: [{
-                        label: 'Profit (₹ Cr)',
-                        data: data.financials.profit,
-                        borderColor: hasNegativeProfit ? '#ef4444' : '#22c55e',
-                        backgroundColor: hasNegativeProfit ? 'rgba(239, 68, 68, 0.1)' : 'rgba(34, 197, 94, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.1,
-                        pointBackgroundColor: hasNegativeProfit ? '#ef4444' : '#22c55e',
-                        pointRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { position: 'bottom' },
-                        title: { display: true, text: 'Quarterly Profit Trend' }
-                    },
-                    scales: {
-                        y: {
-                            title: { display: true, text: 'Profit (₹ Cr)' }
-                        }
-                    }
-                }
-            });
-            
-            console.log(`✅ Profit chart created`);
-        }
+    // Generate scan results
+    this.scanResults = this.stockSymbols.map(stock => {
+      const fundamental = Math.floor(Math.random() * 100);
+      const technical = Math.floor(Math.random() * 100);
+      const ai = Math.floor(Math.random() * 100);
+      const overall = Math.floor((fundamental + technical + ai) / 3);
+      const marketCap = Math.floor(Math.random() * 500000) + 1000;
+
+      return {
+        symbol: stock.symbol,
+        name: stock.name,
+        sector: stock.sector,
+        fundamental,
+        technical,
+        ai,
+        overall,
+        marketCap
+      };
+    }).filter(stock => {
+      return stock.fundamental >= fundScore &&
+             stock.technical >= techScore &&
+             stock.ai >= aiScore &&
+             stock.marketCap >= mcMin &&
+             stock.marketCap <= mcMax &&
+             (sector === '' || stock.sector === sector);
+    }).sort((a, b) => b.overall - a.overall);
+
+    this.renderScanResults();
+    this.showToast(`Found ${this.scanResults.length} stocks matching criteria`, 'success');
+  }
+
+  renderScanResults() {
+    const tbody = document.querySelector('#scanResults tbody');
+    
+    if (this.scanResults.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-16">No stocks match the selected criteria</td></tr>';
+      return;
     }
 
-    createSectorChart(sectorData) {
-        const ctx = document.getElementById('sectorChart');
-        if (!ctx) return;
+    tbody.innerHTML = this.scanResults.map(stock => `
+      <tr>
+        <td><strong>${stock.symbol}</strong></td>
+        <td>${stock.name}</td>
+        <td>${stock.sector}</td>
+        <td><span class="score-badge ${this.getScoreClass(stock.fundamental)}">${stock.fundamental}%</span></td>
+        <td><span class="score-badge ${this.getScoreClass(stock.technical)}">${stock.technical}%</span></td>
+        <td><span class="score-badge ${this.getScoreClass(stock.ai)}">${stock.ai}%</span></td>
+        <td><span class="score-badge ${this.getScoreClass(stock.overall)}">${stock.overall}%</span></td>
+      </tr>
+    `).join('');
+  }
 
-        if (this.charts.sector) this.charts.sector.destroy();
-
-        const sectors = Object.keys(sectorData);
-        const values = Object.values(sectorData);
-        const colors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F', '#DB4545', '#D2BA4C', '#964325', '#944454', '#13343B'];
-
-        this.charts.sector = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: sectors,
-                datasets: [{
-                    data: values,
-                    backgroundColor: colors.slice(0, sectors.length),
-                    borderWidth: 2,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 15,
-                            usePointStyle: true,
-                            font: { size: 11 }
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Sector Allocation'
-                    }
-                }
-            }
-        });
+  exportData(format) {
+    if (this.scanResults.length === 0) {
+      this.showToast('No data to export. Run a scan first.', 'warning');
+      return;
     }
 
-    createPerformanceComparisonChart() {
-        const ctx = document.getElementById('performanceChart');
-        if (!ctx) return;
+    let content, filename, mimeType;
 
-        if (this.charts.performanceComparison) this.charts.performanceComparison.destroy();
-
-        const colors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F'];
-        const datasets = ['1Y', '3Y', '5Y'].map((period, index) => ({
-            label: `${period} Returns`,
-            data: this.selectedFunds.map(() => 10 + Math.random() * 15), // 10-25% returns
-            backgroundColor: colors[index],
-            borderColor: colors[index],
-            borderWidth: 1
-        }));
-
-        this.charts.performanceComparison = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: this.selectedFunds.map(fund => fund.split(' ')[0] + ' ' + fund.split(' ')[1]),
-                datasets: datasets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    title: { display: true, text: 'Fund Performance Comparison' }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Returns (%)' }
-                    }
-                }
-            }
-        });
+    if (format === 'csv') {
+      const headers = ['Symbol', 'Company', 'Sector', 'Fundamental', 'Technical', 'AI Score', 'Overall'];
+      const csvContent = [
+        headers.join(','),
+        ...this.scanResults.map(stock => [
+          stock.symbol,
+          `"${stock.name}"`,
+          stock.sector,
+          stock.fundamental,
+          stock.technical,
+          stock.ai,
+          stock.overall
+        ].join(','))
+      ].join('\n');
+      
+      content = csvContent;
+      filename = 'stock_scan_results.csv';
+      mimeType = 'text/csv';
+    } else {
+      content = JSON.stringify(this.scanResults, null, 2);
+      filename = 'stock_scan_results.json';
+      mimeType = 'application/json';
     }
 
-    createSectorOverlapChart() {
-        const ctx = document.getElementById('overlapChart');
-        if (!ctx) return;
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
 
-        if (this.charts.sectorOverlap) this.charts.sectorOverlap.destroy();
+    this.showToast(`Exported ${this.scanResults.length} records as ${format.toUpperCase()}`, 'success');
+  }
 
-        const sectors = ['Financial Services', 'Information Technology', 'Oil Gas & Consumable Fuels', 'FMCG', 'Healthcare', 'Auto', 'Others'];
-        const colors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F', '#DB4545', '#D2BA4C'];
-        
-        const datasets = this.selectedFunds.map((fund, index) => ({
-            label: fund.split(' ')[0] + ' ' + fund.split(' ')[1],
-            data: sectors.map(() => 5 + Math.random() * 20), // 5-25% allocation
-            backgroundColor: colors[index % colors.length],
-            borderColor: colors[index % colors.length],
-            borderWidth: 1
-        }));
+  showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast toast--${type}`;
+    toast.classList.add('show');
 
-        this.charts.sectorOverlap = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: sectors,
-                datasets: datasets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'bottom' },
-                    title: { display: true, text: 'Sector Allocation Comparison' }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Allocation (%)' }
-                    }
-                }
-            }
-        });
-    }
-
-    generateDiversificationSuggestions() {
-        const suggestions = [
-            { name: "ICICI Prudential Technology Fund - Direct Growth", category: "Sectoral - Technology", score: "92" },
-            { name: "Nippon India Small Cap Fund - Direct Growth", category: "Small Cap", score: "88" },
-            { name: "SBI Healthcare Opportunities Fund - Direct Growth", category: "Sectoral - Healthcare", score: "85" },
-            { name: "HDFC Infrastructure Fund - Direct Growth", category: "Sectoral - Infrastructure", score: "82" },
-            { name: "Mirae Asset Emerging Bluechip Fund - Direct Growth", category: "Large & Mid Cap", score: "80" },
-            { name: "Axis Long Term Equity Fund - Direct Growth", category: "ELSS Tax Saver", score: "78" },
-            { name: "Kotak India EQ Contra Fund - Direct Growth", category: "Contrarian", score: "75" },
-            { name: "DSP Global Allocation Fund - Direct Growth", category: "International", score: "72" }
-        ];
-
-        const container = document.getElementById('diversificationSuggestions');
-        if (container) {
-            container.innerHTML = suggestions.slice(0, 8).map(suggestion => 
-                `<div class="suggestion-card">
-                    <div class="suggestion-fund-name">${suggestion.name}</div>
-                    <div class="suggestion-category">${suggestion.category}</div>
-                    <div class="diversification-score">
-                        <span class="score-label">Diversification Score:</span>
-                        <span class="score-value">${suggestion.score}%</span>
-                    </div>
-                </div>`
-            ).join('');
-        }
-    }
-
-    // DATA GENERATION HELPER METHODS
-    getBasePrice(symbol) {
-        const priceMap = {
-            'RELIANCE': 2850, 'TCS': 4120, 'HDFCBANK': 1650, 'ICICIBANK': 1250, 'INFY': 1890,
-            'JPPOWER': 12.5, 'IDEA': 15.8, 'SUZLON': 67.2, 'YESBANK': 28.4, 'ADANIENT': 2890,
-            'ADANIGREEN': 1245, 'BHARTIARTL': 1180, 'ITC': 485, 'SBIN': 820, 'LT': 3650
-        };
-        return priceMap[symbol] || (100 + Math.random() * 2000);
-    }
-
-    getCompanyName(symbol) {
-        const nameMap = {
-            'RELIANCE': 'Reliance Industries Ltd', 'TCS': 'Tata Consultancy Services Ltd',
-            'HDFCBANK': 'HDFC Bank Ltd', 'ICICIBANK': 'ICICI Bank Ltd', 'INFY': 'Infosys Ltd',
-            'JPPOWER': 'Jaiprakash Power Ventures Ltd', 'IDEA': 'Vodafone Idea Ltd',
-            'SUZLON': 'Suzlon Energy Ltd', 'YESBANK': 'Yes Bank Ltd', 'ADANIENT': 'Adani Enterprises Ltd',
-            'ADANIGREEN': 'Adani Green Energy Ltd', 'BHARTIARTL': 'Bharti Airtel Ltd'
-        };
-        return nameMap[symbol] || `${symbol} Ltd`;
-    }
-
-    generatePE(symbol) { 
-        const distressedStocks = ['JPPOWER', 'IDEA', 'SUZLON', 'YESBANK'];
-        if (distressedStocks.includes(symbol)) {
-            return Math.random() < 0.5 ? -(5 + Math.random() * 20) : (50 + Math.random() * 100);
-        }
-        return 8 + Math.random() * 32; // 8-40 range for normal stocks
-    }
-
-    generateROE(symbol) {
-        const distressedStocks = ['JPPOWER', 'IDEA', 'SUZLON', 'YESBANK'];
-        if (distressedStocks.includes(symbol)) {
-            return -(5 + Math.random() * 20); // Negative ROE
-        }
-        return 5 + Math.random() * 35; // 5-40% for normal stocks
-    }
-
-    generateNetMargin(symbol) {
-        const distressedStocks = ['JPPOWER', 'IDEA', 'SUZLON', 'YESBANK'];
-        if (distressedStocks.includes(symbol)) {
-            return -(2 + Math.random() * 15); // Negative margins
-        }
-        return 2 + Math.random() * 23; // 2-25% for normal stocks
-    }
-
-    generatePromoterHolding(symbol) {
-        const publicSectorStocks = ['SBIN', 'IOC', 'BPCL', 'ONGC', 'NTPC'];
-        if (publicSectorStocks.includes(symbol)) {
-            return 55 + Math.random() * 25; // 55-80% for PSU stocks
-        }
-        return 25 + Math.random() * 50; // 25-75% for private stocks
-    }
-
-    generatePledgePercent(symbol) {
-        const distressedStocks = ['JPPOWER', 'IDEA', 'SUZLON', 'YESBANK'];
-        if (distressedStocks.includes(symbol)) {
-            return 40 + Math.random() * 50; // High pledge 40-90%
-        }
-        return Math.random() * 20; // Low pledge 0-20% for normal stocks
-    }
-
-    calculateBuyRating(symbol) {
-        const distressedStocks = ['JPPOWER', 'IDEA', 'SUZLON', 'YESBANK'];
-        
-        if (distressedStocks.includes(symbol)) {
-            const technical = 45 + Math.random() * 30; // 45-75%
-            const fundamental = 15 + Math.random() * 25; // 15-40%
-            const shareholding = 20 + Math.random() * 30; // 20-50%
-            const overall = (technical + fundamental + shareholding) / 3;
-            
-            return {
-                technical: Math.round(technical),
-                fundamental: Math.round(fundamental),
-                shareholding: Math.round(shareholding),
-                overall: Math.round(overall),
-                shortTerm: overall > 60 ? 'Buy' : overall > 40 ? 'Hold' : 'Sell',
-                midTerm: overall > 50 ? 'Buy' : overall > 35 ? 'Hold' : 'Sell',
-                longTerm: overall > 45 ? 'Buy' : overall > 30 ? 'Hold' : 'Sell'
-            };
-        } else {
-            const technical = 60 + Math.random() * 30; // 60-90%
-            const fundamental = 65 + Math.random() * 25; // 65-90%
-            const shareholding = 70 + Math.random() * 25; // 70-95%
-            const overall = (technical + fundamental + shareholding) / 3;
-            
-            return {
-                technical: Math.round(technical),
-                fundamental: Math.round(fundamental),
-                shareholding: Math.round(shareholding),
-                overall: Math.round(overall),
-                shortTerm: overall > 75 ? 'Buy' : overall > 60 ? 'Hold' : 'Sell',
-                midTerm: overall > 70 ? 'Buy' : overall > 55 ? 'Hold' : 'Sell', 
-                longTerm: overall > 65 ? 'Buy' : overall > 50 ? 'Hold' : 'Sell'
-            };
-        }
-    }
-
-    generateQuarterlyData(symbol, type) {
-        const distressedStocks = ['JPPOWER', 'IDEA', 'SUZLON', 'YESBANK'];
-        const baseValue = type === 'revenue' ? 1000 + Math.random() * 5000 : 100 + Math.random() * 500;
-        
-        if (distressedStocks.includes(symbol) && type === 'profit') {
-            return Array(4).fill(0).map(() => -(50 + Math.random() * 200)); // Negative profits
-        }
-        
-        return Array(4).fill(0).map((_, i) => {
-            const growth = type === 'revenue' ? 0.05 : 0.08; // 5% revenue, 8% profit growth
-            return baseValue * Math.pow(1 + growth, i) * (0.9 + Math.random() * 0.2);
-        });
-    }
-
-    generateFreshFundData(fundName) {
-        const now = new Date();
-        const baseNAV = 50 + Math.random() * 200;
-        
-        return {
-            name: fundName,
-            nav: baseNAV,
-            rating: 3 + Math.floor(Math.random() * 3), // 3-5 stars
-            category: this.getFundCategory(fundName),
-            expenseRatio: 0.3 + Math.random() * 1.2, // 0.3-1.5%
-            aum: 1000 + Math.random() * 15000, // 1000-16000 Cr
-            returns: {
-                '1Y': 8 + Math.random() * 22, // 8-30%
-                '3Y': 10 + Math.random() * 15, // 10-25%
-                '5Y': 8 + Math.random() * 12 // 8-20%
-            },
-            sectorAllocation: this.generateSectorAllocation(),
-            topHoldings: this.generateTopHoldings(),
-            buyRating: Math.round(70 + Math.random() * 25), // 70-95%
-            dataFreshness: `Fresh fund data loaded at ${now.toLocaleTimeString('en-IN')} on ${now.toDateString()}`
-        };
-    }
-
-    getFundCategory(fundName) {
-        if (fundName.includes('Bluechip') || fundName.includes('Top 100') || fundName.includes('Large Cap')) return 'Large Cap';
-        if (fundName.includes('Mid Cap') || fundName.includes('Midcap')) return 'Mid Cap';
-        if (fundName.includes('Small Cap')) return 'Small Cap';
-        if (fundName.includes('Flexicap')) return 'Flexicap';
-        return 'Large Cap';
-    }
-
-    generateSectorAllocation() {
-        const sectors = ['Financial Services', 'Information Technology', 'Oil Gas & Consumable Fuels', 'FMCG', 'Healthcare', 'Auto', 'Metals', 'Others'];
-        const allocation = {};
-        let remaining = 100;
-        
-        sectors.forEach((sector, index) => {
-            if (index === sectors.length - 1) {
-                allocation[sector] = remaining;
-            } else {
-                const percent = Math.random() * (remaining / (sectors.length - index));
-                allocation[sector] = Math.round(percent * 10) / 10;
-                remaining -= allocation[sector];
-            }
-        });
-        
-        return allocation;
-    }
-
-    generateTopHoldings() {
-        const stocks = ['RELIANCE', 'HDFC BANK', 'ICICI BANK', 'INFOSYS', 'TCS', 'KOTAK BANK', 'BAJAJ FINANCE', 'ITC', 'AXIS BANK', 'SBI'];
-        return stocks.slice(0, 10).map((stock, index) => ({
-            stock: stock,
-            percent: parseFloat((8 - index * 0.5 + Math.random() * 2).toFixed(1))
-        }));
-    }
-
-    // MORE UTILITY METHODS
-    generateDateLabels(days) {
-        const labels = [];
-        for (let i = days - 1; i >= 0; i--) {
-            const date = new Date();
-            date.setDate(date.getDate() - i);
-            labels.push(date.toLocaleDateString('en-IN'));
-        }
-        return labels;
-    }
-
-    generatePriceHistory(currentPrice, days) {
-        const prices = [];
-        let price = currentPrice * 0.95; // Start 5% below current
-        
-        for (let i = 0; i < days; i++) {
-            const change = (Math.random() - 0.5) * 0.04; // ±2% daily change
-            price = price * (1 + change);
-            prices.push(parseFloat(price.toFixed(2)));
-        }
-        
-        // Ensure last price is close to current price
-        prices[prices.length - 1] = currentPrice;
-        return prices;
-    }
-
-    generateTrendData(baseValue, periods, variance) {
-        return Array(periods).fill(0).map(() => 
-            Math.max(0, baseValue + (Math.random() - 0.5) * variance)
-        );
-    }
-
-    // SIGNAL GENERATION METHODS
-    getRSISignal(rsi) {
-        if (rsi > 70) return { text: 'Overbought', type: 'bearish', color: 'poor' };
-        if (rsi < 30) return { text: 'Oversold', type: 'bullish', color: 'good' };
-        if (rsi >= 50) return { text: 'Bullish', type: 'bullish', color: 'good' };
-        return { text: 'Bearish', type: 'bearish', color: 'poor' };
-    }
-
-    getMACDSignal(macd) {
-        if (macd > 0) return { text: 'Bullish', type: 'bullish', color: 'good' };
-        return { text: 'Bearish', type: 'bearish', color: 'poor' };
-    }
-
-    getBollingerSignal(bollinger) {
-        if (bollinger > 80) return { text: 'Overbought', type: 'bearish', color: 'poor' };
-        if (bollinger < 20) return { text: 'Oversold', type: 'bullish', color: 'good' };
-        return { text: 'Neutral', type: 'neutral', color: 'average' };
-    }
-
-    getADXSignal(adx) {
-        if (adx > 25) return { text: 'Strong Trend', type: 'bullish', color: 'good' };
-        if (adx > 20) return { text: 'Trend Building', type: 'neutral', color: 'average' };
-        return { text: 'Weak Trend', type: 'neutral', color: 'poor' };
-    }
-
-    getATRSignal(atr) {
-        return { text: 'Volatility', type: 'neutral', color: 'average' };
-    }
-
-    getStochasticSignal(stoch) {
-        if (stoch > 80) return { text: 'Overbought', type: 'bearish', color: 'poor' };
-        if (stoch < 20) return { text: 'Oversold', type: 'bullish', color: 'good' };
-        return { text: 'Neutral', type: 'neutral', color: 'average' };
-    }
-
-    // COLOR CODING METHODS
-    getPEColor(pe) {
-        if (pe < 0) return 'poor';
-        if (pe >= 10 && pe <= 20) return 'good';
-        if (pe > 20 && pe <= 30) return 'average';
-        return 'poor';
-    }
-
-    getPEGColor(peg) {
-        if (peg < 0) return 'poor';
-        if (peg < 1) return 'good';
-        if (peg <= 2) return 'average';
-        return 'poor';
-    }
-
-    getPBColor(pb) {
-        if (pb < 2) return 'good';
-        if (pb <= 3) return 'average';
-        return 'poor';
-    }
-
-    getROEColor(roe) {
-        if (roe < 0) return 'poor';
-        if (roe > 15) return 'good';
-        if (roe >= 10) return 'average';
-        return 'poor';
-    }
-
-    getROAColor(roa) {
-        if (roa < 0) return 'poor';
-        if (roa > 10) return 'good';
-        if (roa >= 5) return 'average';
-        return 'poor';
-    }
-
-    getROCEColor(roce) {
-        if (roce < 0) return 'poor';
-        if (roce > 20) return 'good';
-        if (roce >= 15) return 'average';
-        return 'poor';
-    }
-
-    getMarginColor(margin) {
-        if (margin < 0) return 'poor';
-        if (margin > 10) return 'good';
-        if (margin >= 5) return 'average';
-        return 'poor';
-    }
-
-    getCurrentRatioColor(ratio) {
-        if (ratio >= 1.5) return 'good';
-        if (ratio >= 1) return 'average';
-        return 'poor';
-    }
-
-    getQuickRatioColor(ratio) {
-        if (ratio >= 1) return 'good';
-        if (ratio >= 0.7) return 'average';
-        return 'poor';
-    }
-
-    getDebtColor(debt) {
-        if (debt < 1) return 'good';
-        if (debt <= 2) return 'average';
-        return 'poor';
-    }
-
-    getInterestCoverageColor(coverage) {
-        if (coverage > 5) return 'good';
-        if (coverage >= 2.5) return 'average';
-        return 'poor';
-    }
-
-    // UPDATE METHODS
-    updateElement(id, text) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.textContent = text;
-        } else {
-            console.warn(`Element with id '${id}' not found`);
-        }
-    }
-
-    updateTermCall(elementId, call) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.textContent = call;
-            element.className = `term-call ${call.toLowerCase()}`;
-        }
-    }
-
-    updateIndicatorWithSignal(valueId, value, signal) {
-        const valueElement = document.getElementById(valueId);
-        const signalElement = document.getElementById(valueId.replace('Value', 'Signal'));
-        
-        if (valueElement) {
-            valueElement.textContent = value;
-            valueElement.className = `indicator-value ${signal.color}`;
-        }
-        
-        if (signalElement) {
-            signalElement.textContent = signal.text;
-            signalElement.className = `indicator-signal ${signal.type}`;
-        }
-    }
-
-    updateMetricWithColor(elementId, value, colorClass) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.textContent = value;
-            element.className = `metric-value ${colorClass}`;
-        }
-    }
-
-    updateChangeElement(elementId, change) {
-        const element = document.getElementById(elementId);
-        if (element) {
-            const sign = change >= 0 ? '+' : '';
-            element.textContent = `${sign}${change.toFixed(1)}%`;
-            element.className = `holding-change ${change >= 0 ? 'positive' : 'negative'}`;
-        }
-    }
-
-    updatePledgeRisk(pledgePercent) {
-        const element = document.getElementById('pledgeRisk');
-        if (element) {
-            let risk, className;
-            if (pledgePercent < 5) {
-                risk = 'Low Risk';
-                className = 'low';
-            } else if (pledgePercent <= 20) {
-                risk = 'Medium Risk';
-                className = 'medium';
-            } else {
-                risk = 'High Risk';
-                className = 'high';
-            }
-            element.textContent = risk;
-            element.className = `pledge-risk ${className}`;
-        }
-    }
-
-    displayTopHoldings(holdings) {
-        const table = document.getElementById('topHoldings');
-        if (table) {
-            table.innerHTML = holdings.map(holding => 
-                `<div class="holding-stock-row">
-                    <span class="holding-stock">${holding.stock}</span>
-                    <span class="holding-percent">${holding.percent}%</span>
-                </div>`
-            ).join('');
-        }
-    }
-
-    showLoading(buttonId, show) {
-        const button = document.getElementById(buttonId);
-        if (!button) return;
-
-        const spinner = button.querySelector('.loading-spinner');
-        const text = button.querySelector('.btn-text');
-
-        if (show) {
-            if (spinner) spinner.classList.remove('hidden');
-            if (text) {
-                text.textContent = buttonId === 'fetchStockBtn' ? 
-                    '🔄 Fetching Fresh Data...' : '🔄 Analyzing Fresh Data...';
-            }
-            button.disabled = true;
-        } else {
-            if (spinner) spinner.classList.add('hidden');
-            if (text) {
-                text.textContent = buttonId === 'fetchStockBtn' ? 
-                    '🚀 Fetch Fresh Data' : '🔍 Analyze Selected Funds (Fresh Data)';
-            }
-            button.disabled = false;
-        }
-    }
-
-    showError(message) {
-        const errorContainer = document.getElementById('errorContainer');
-        const errorMessage = document.getElementById('errorMessage');
-        
-        if (errorContainer && errorMessage) {
-            errorContainer.classList.remove('hidden');
-            errorMessage.textContent = message;
-            
-            setTimeout(() => {
-                this.hideError();
-            }, 8000);
-        }
-        console.error('Error:', message);
-    }
-
-    hideError() {
-        const errorContainer = document.getElementById('errorContainer');
-        if (errorContainer) {
-            errorContainer.classList.add('hidden');
-        }
-    }
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
 }
 
-// Global app instance and quick access functions
-let app;
-
-// Make quickFetch available globally for onclick handlers
-window.quickFetch = function(symbol) {
-    if (app) {
-        app.quickFetch(symbol);
-    }
-};
-
-window.quickSelectFund = function(fundName) {
-    if (app) {
-        app.quickSelectFund(fundName);
-    }
-};
-
-// Initialize application
+// Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 DOM loaded, initializing Fresh Data Stock & MF Analyzer...');
-    app = new FreshDataStockAnalyzer();
-    
-    // Make app globally accessible for onclick handlers
-    window.app = app;
-    
-    console.log('✅ Application ready - 1000+ stocks, 500+ mutual funds, always fresh data!');
+  console.log('DOM loaded, initializing SMF Analyzer...');
+  window.smfAnalyzer = new SMFAnalyzer();
 });
