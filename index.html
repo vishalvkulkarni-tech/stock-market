@@ -20,6 +20,7 @@
           <li class="main-tab btn btn--secondary active-tab" data-tab="stocks">Stocks</li>
           <li class="main-tab btn btn--secondary" data-tab="mutual-funds">Mutual Funds</li>
           <li class="main-tab btn btn--secondary" data-tab="scanner">Scanner</li>
+          <li class="main-tab btn btn--secondary" data-tab="scanner-ext">Scanner Ext</li>
         </ul>
       </nav>
     </div>
@@ -100,11 +101,14 @@
             type="text" 
             id="fundSearch" 
             class="form-control" 
-            placeholder="Search mutual fund name"
+            placeholder="Search mutual fund name (e.g., HDFC, SBI, ICICI)"
             autocomplete="off"
           />
           <ul id="fundSuggestions" class="suggestions-list hidden"></ul>
         </div>
+        <p class="mt-8" style="color: var(--color-text-secondary); font-size: var(--font-size-sm);">
+          Try searching for popular funds: HDFC (20+ funds), SBI (30+ funds), ICICI, Axis, Mirae Asset
+        </p>
       </div>
 
       <div id="selectedFunds" class="selected-funds mb-16 hidden">
@@ -212,6 +216,45 @@
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Scanner Ext Tab -->
+    <section id="scanner-ext" class="tab-content hidden">
+      <div class="scanner-ext-header">
+        <h2>External Stock Scanners</h2>
+        <p class="text-secondary">Fetch stock recommendations from 12 external scanners with AI-powered scoring</p>
+        <div class="scanner-info-grid">
+          <div class="scanner-info-card">
+            <h4>ChartInk Scanners</h4>
+            <p>Professional technical analysis scanners including breakout patterns, moving averages, and volume-based signals</p>
+          </div>
+          <div class="scanner-info-card">
+            <h4>Zerodha Technicals</h4>
+            <p>Advanced technical dashboard with institutional-grade screening capabilities</p>
+          </div>
+          <div class="scanner-info-card">
+            <h4>AI Scoring</h4>
+            <p>Each stock gets an intelligent score based on multiple factors including market cap, sector performance, and technical strength</p>
+          </div>
+        </div>
+        <button id="runScannersBtn" class="btn btn--primary btn--lg mt-16">
+          <span class="btn-text">Run All Scanners</span>
+          <span class="btn-icon hidden">⟳</span>
+        </button>
+      </div>
+
+      <div id="scannerProgress" class="scanner-progress hidden">
+        <div class="progress-container">
+          <div class="progress-bar">
+            <div class="progress-fill"></div>
+          </div>
+          <p class="progress-text">Running scanners... <span class="progress-count">0</span> of <span class="progress-total">12</span> completed</p>
+        </div>
+      </div>
+
+      <div id="scannerResults" class="scanner-results-grid">
+        <!-- Scanner result cards will be dynamically generated here -->
       </div>
     </section>
   </main>
