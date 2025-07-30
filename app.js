@@ -1,8 +1,6 @@
-// Stock & Mutual Fund Analyzer - Fixed Working Version
+// Complete Stock & Mutual Fund Analyzer Application
 class SMFAnalyzer {
   constructor() {
-    console.log('SMF Analyzer constructor called');
-    
     this.stockSymbols = [
       {"symbol": "RELIANCE.NS", "name": "Reliance Industries Limited", "sector": "Oil & Gas"},
       {"symbol": "TCS.NS", "name": "Tata Consultancy Services", "sector": "IT"},
@@ -18,144 +16,83 @@ class SMFAnalyzer {
       {"symbol": "BHARTIARTL.NS", "name": "Bharti Airtel Limited", "sector": "Telecom"},
       {"symbol": "ASIANPAINT.NS", "name": "Asian Paints Limited", "sector": "Paints"},
       {"symbol": "MARUTI.NS", "name": "Maruti Suzuki India Limited", "sector": "Auto"},
-      {"symbol": "BAJFINANCE.NS", "name": "Bajaj Finance Limited", "sector": "NBFC"}
-    ];
-
-    // External scanners configuration
-    this.externalScanners = [
-      { "name": "S2 Scanner", "url": "https://chartink.com/screener/s2-947", "type": "chartink" },
-      { "name": "Zerodha Technicals", "url": "https://technicals.zerodha.com/dashboard", "type": "zerodha" },
-      { "name": "52 Week High Breakout", "url": "https://chartink.com/screener/copy-52-week-high-breakout-2627", "type": "chartink" },
-      { "name": "ATH Breakout", "url": "https://chartink.com/screener/copy-ath-breakout-5000-41", "type": "chartink" },
-      { "name": "EMA/MACD Scanner", "url": "https://chartink.com/screener/copy-20-ema-50-ema-200-ema-macd-11", "type": "chartink" },
-      { "name": "S1 Scanner", "url": "https://chartink.com/screener/s1-1812", "type": "chartink" },
-      { "name": "LT Consolidated Rise", "url": "https://chartink.com/screener/lt-consolidated-and-expected-to-rise-weekly", "type": "chartink" },
-      { "name": "Consolidated to Raise", "url": "https://chartink.com/screener/consolidated-and-expected-to-raise", "type": "chartink" },
-      { "name": "Potential Breakouts", "url": "https://chartink.com/screener/copy-potential-breakouts-7435", "type": "chartink" },
-      { "name": "Multi-Resistance Buy", "url": "https://chartink.com/screener/copy-multi-resistance-cross-buy-25", "type": "chartink" },
-      { "name": "Resistance Breakout HV", "url": "https://chartink.com/screener/copy-resistance-breakout-with-high-volume-10039", "type": "chartink" },
-      { "name": "Strong Stocks", "url": "https://chartink.com/screener/copy-strong-stocks-19866", "type": "chartink" }
-    ];
-
-    // Comprehensive mutual funds data - EXACT working version
-    this.mutualFunds = [
-      // HDFC Funds (20+ funds as required)
-      { schemeCode: 120503, schemeName: 'HDFC Top 100 Fund - Direct Plan - Growth' },
-      { schemeCode: 120504, schemeName: 'HDFC Top 100 Fund - Direct Plan - Dividend' },
-      { schemeCode: 120505, schemeName: 'HDFC Top 100 Fund - Regular Plan - Growth' },
-      { schemeCode: 120506, schemeName: 'HDFC Top 100 Fund - Regular Plan - Dividend' },
-      { schemeCode: 120507, schemeName: 'HDFC Equity Fund - Direct Plan - Growth' },
-      { schemeCode: 120508, schemeName: 'HDFC Equity Fund - Direct Plan - Dividend' },
-      { schemeCode: 120509, schemeName: 'HDFC Equity Fund - Regular Plan - Growth' },
-      { schemeCode: 120510, schemeName: 'HDFC Equity Fund - Regular Plan - Dividend' },
-      { schemeCode: 120511, schemeName: 'HDFC Mid-Cap Opportunities Fund - Direct Plan - Growth' },
-      { schemeCode: 120512, schemeName: 'HDFC Mid-Cap Opportunities Fund - Direct Plan - Dividend' },
-      { schemeCode: 120513, schemeName: 'HDFC Mid-Cap Opportunities Fund - Regular Plan - Growth' },
-      { schemeCode: 120514, schemeName: 'HDFC Mid-Cap Opportunities Fund - Regular Plan - Dividend' },
-      { schemeCode: 120515, schemeName: 'HDFC Small Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 120516, schemeName: 'HDFC Small Cap Fund - Direct Plan - Dividend' },
-      { schemeCode: 120517, schemeName: 'HDFC Small Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 120518, schemeName: 'HDFC Small Cap Fund - Regular Plan - Dividend' },
-      { schemeCode: 120519, schemeName: 'HDFC Balanced Advantage Fund - Direct Plan - Growth' },
-      { schemeCode: 120520, schemeName: 'HDFC Balanced Advantage Fund - Direct Plan - Dividend' },
-      { schemeCode: 120521, schemeName: 'HDFC Balanced Advantage Fund - Regular Plan - Growth' },
-      { schemeCode: 120522, schemeName: 'HDFC Balanced Advantage Fund - Regular Plan - Dividend' },
-      { schemeCode: 120523, schemeName: 'HDFC Hybrid Equity Fund - Direct Plan - Growth' },
-      { schemeCode: 120524, schemeName: 'HDFC Hybrid Equity Fund - Regular Plan - Growth' },
-      { schemeCode: 120525, schemeName: 'HDFC Flexi Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 120526, schemeName: 'HDFC Flexi Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 120527, schemeName: 'HDFC Large and Mid Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 120528, schemeName: 'HDFC Large and Mid Cap Fund - Regular Plan - Growth' },
-
-      // SBI Funds (30+ funds as required)
-      { schemeCode: 118989, schemeName: 'SBI Bluechip Fund - Direct Plan - Growth' },
-      { schemeCode: 118990, schemeName: 'SBI Bluechip Fund - Direct Plan - Dividend' },
-      { schemeCode: 118991, schemeName: 'SBI Bluechip Fund - Regular Plan - Growth' },
-      { schemeCode: 118992, schemeName: 'SBI Bluechip Fund - Regular Plan - Dividend' },
-      { schemeCode: 118993, schemeName: 'SBI Large Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 118994, schemeName: 'SBI Large Cap Fund - Direct Plan - Dividend' },
-      { schemeCode: 118995, schemeName: 'SBI Large Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 118996, schemeName: 'SBI Large Cap Fund - Regular Plan - Dividend' },
-      { schemeCode: 118997, schemeName: 'SBI Mid Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 118998, schemeName: 'SBI Mid Cap Fund - Direct Plan - Dividend' },
-      { schemeCode: 118999, schemeName: 'SBI Mid Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 119000, schemeName: 'SBI Mid Cap Fund - Regular Plan - Dividend' },
-      { schemeCode: 119001, schemeName: 'SBI Small Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 119002, schemeName: 'SBI Small Cap Fund - Direct Plan - Dividend' },
-      { schemeCode: 119003, schemeName: 'SBI Small Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 119004, schemeName: 'SBI Small Cap Fund - Regular Plan - Dividend' },
-      { schemeCode: 119005, schemeName: 'SBI Focused Equity Fund - Direct Plan - Growth' },
-      { schemeCode: 119006, schemeName: 'SBI Focused Equity Fund - Direct Plan - Dividend' },
-      { schemeCode: 119007, schemeName: 'SBI Focused Equity Fund - Regular Plan - Growth' },
-      { schemeCode: 119008, schemeName: 'SBI Focused Equity Fund - Regular Plan - Dividend' },
-      { schemeCode: 119009, schemeName: 'SBI Contra Fund - Direct Plan - Growth' },
-      { schemeCode: 119010, schemeName: 'SBI Contra Fund - Direct Plan - Dividend' },
-      { schemeCode: 119011, schemeName: 'SBI Contra Fund - Regular Plan - Growth' },
-      { schemeCode: 119012, schemeName: 'SBI Contra Fund - Regular Plan - Dividend' },
-      { schemeCode: 119013, schemeName: 'SBI Healthcare Opportunities Fund - Direct Plan - Growth' },
-      { schemeCode: 119014, schemeName: 'SBI Healthcare Opportunities Fund - Regular Plan - Growth' },
-      { schemeCode: 119015, schemeName: 'SBI Technology Opportunities Fund - Direct Plan - Growth' },
-      { schemeCode: 119016, schemeName: 'SBI Technology Opportunities Fund - Regular Plan - Growth' },
-      { schemeCode: 119017, schemeName: 'SBI Banking & Financial Services Fund - Direct Plan - Growth' },
-      { schemeCode: 119018, schemeName: 'SBI Banking & Financial Services Fund - Regular Plan - Growth' },
-      { schemeCode: 119019, schemeName: 'SBI Pharma Fund - Direct Plan - Growth' },
-      { schemeCode: 119020, schemeName: 'SBI Pharma Fund - Regular Plan - Growth' },
-      { schemeCode: 119021, schemeName: 'SBI PSU Fund - Direct Plan - Growth' },
-      { schemeCode: 119022, schemeName: 'SBI PSU Fund - Regular Plan - Growth' },
-      { schemeCode: 119023, schemeName: 'SBI Equity Hybrid Fund - Direct Plan - Growth' },
-      { schemeCode: 119024, schemeName: 'SBI Equity Hybrid Fund - Regular Plan - Growth' },
-
-      // ICICI Prudential Funds
-      { schemeCode: 119551, schemeName: 'ICICI Prudential Bluechip Fund - Direct Plan - Growth' },
-      { schemeCode: 119552, schemeName: 'ICICI Prudential Bluechip Fund - Regular Plan - Growth' },
-      { schemeCode: 119553, schemeName: 'ICICI Prudential Focused Bluechip Equity Fund - Direct Plan - Growth' },
-      { schemeCode: 119554, schemeName: 'ICICI Prudential Focused Bluechip Equity Fund - Regular Plan - Growth' },
-      { schemeCode: 119555, schemeName: 'ICICI Prudential Large & Mid Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 119556, schemeName: 'ICICI Prudential Large & Mid Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 119557, schemeName: 'ICICI Prudential Mid Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 119558, schemeName: 'ICICI Prudential Mid Cap Fund - Regular Plan - Growth' },
-      { schemeCode: 119559, schemeName: 'ICICI Prudential Small Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 119560, schemeName: 'ICICI Prudential Small Cap Fund - Regular Plan - Growth' },
-
-      // Additional Popular Funds
-      { schemeCode: 120716, schemeName: 'Axis Bluechip Fund - Direct Plan - Growth' },
-      { schemeCode: 125494, schemeName: 'Mirae Asset Large Cap Fund - Direct Plan - Growth' },
-      { schemeCode: 118221, schemeName: 'Kotak Standard Multicap Fund - Direct Plan - Growth' },
-      { schemeCode: 112618, schemeName: 'Franklin India Bluechip Fund - Direct Plan - Growth' },
-      { schemeCode: 131456, schemeName: 'Parag Parikh Long Term Equity Fund - Direct Plan - Growth' }
+      {"symbol": "BAJFINANCE.NS", "name": "Bajaj Finance Limited", "sector": "NBFC"},
+      {"symbol": "M&M.NS", "name": "Mahindra & Mahindra Limited", "sector": "Auto"},
+      {"symbol": "WIPRO.NS", "name": "Wipro Limited", "sector": "IT"},
+      {"symbol": "NTPC.NS", "name": "NTPC Limited", "sector": "Power"},
+      {"symbol": "TECHM.NS", "name": "Tech Mahindra Limited", "sector": "IT"},
+      {"symbol": "POWERGRID.NS", "name": "Power Grid Corporation", "sector": "Power"},
+      {"symbol": "ULTRACEMCO.NS", "name": "UltraTech Cement Limited", "sector": "Cement"},
+      {"symbol": "TITAN.NS", "name": "Titan Company Limited", "sector": "Jewellery"},
+      {"symbol": "SUNPHARMA.NS", "name": "Sun Pharmaceutical Industries", "sector": "Pharma"},
+      {"symbol": "JSWSTEEL.NS", "name": "JSW Steel Limited", "sector": "Steel"},
+      {"symbol": "TATASTEEL.NS", "name": "Tata Steel Limited", "sector": "Steel"},
+      {"symbol": "ADANIPORTS.NS", "name": "Adani Ports and SEZ Limited", "sector": "Infrastructure"},
+      {"symbol": "HINDALCO.NS", "name": "Hindalco Industries Limited", "sector": "Metals"},
+      {"symbol": "COALINDIA.NS", "name": "Coal India Limited", "sector": "Mining"},
+      {"symbol": "BRITANNIA.NS", "name": "Britannia Industries Limited", "sector": "FMCG"},
+      {"symbol": "ONGC.NS", "name": "Oil & Natural Gas Corporation", "sector": "Oil & Gas"},
+      {"symbol": "HEROMOTOCO.NS", "name": "Hero MotoCorp Limited", "sector": "Auto"},
+      {"symbol": "BAJAJ-AUTO.NS", "name": "Bajaj Auto Limited", "sector": "Auto"},
+      {"symbol": "GRASIM.NS", "name": "Grasim Industries Limited", "sector": "Textiles"},
+      {"symbol": "CIPLA.NS", "name": "Cipla Limited", "sector": "Pharma"},
+      {"symbol": "DRREDDY.NS", "name": "Dr. Reddy's Laboratories", "sector": "Pharma"},
+      {"symbol": "NESTLEIND.NS", "name": "Nestle India Limited", "sector": "FMCG"},
+      {"symbol": "DIVISLAB.NS", "name": "Divi's Laboratories Limited", "sector": "Pharma"},
+      {"symbol": "EICHERMOT.NS", "name": "Eicher Motors Limited", "sector": "Auto"},
+      {"symbol": "TATACONSUM.NS", "name": "Tata Consumer Products", "sector": "FMCG"},
+      {"symbol": "ADANIENT.NS", "name": "Adani Enterprises Limited", "sector": "Conglomerate"},
+      {"symbol": "APOLLOHOSP.NS", "name": "Apollo Hospitals Enterprise", "sector": "Healthcare"},
+      {"symbol": "SHREECEM.NS", "name": "Shree Cement Limited", "sector": "Cement"},
+      {"symbol": "HINDUNILVR.NS", "name": "Hindustan Unilever Limited", "sector": "FMCG"},
+      {"symbol": "BAJAJFINSV.NS", "name": "Bajaj Finserv Limited", "sector": "Financial Services"},
+      {"symbol": "BPCL.NS", "name": "Bharat Petroleum Corporation", "sector": "Oil & Gas"},
+      {"symbol": "IOC.NS", "name": "Indian Oil Corporation", "sector": "Oil & Gas"},
+      {"symbol": "INDUSINDBK.NS", "name": "IndusInd Bank Limited", "sector": "Banking"},
+      {"symbol": "TATAMOTORS.NS", "name": "Tata Motors Limited", "sector": "Auto"},
+      {"symbol": "SBILIFE.NS", "name": "SBI Life Insurance Company", "sector": "Insurance"},
+      {"symbol": "HDFCLIFE.NS", "name": "HDFC Life Insurance Company", "sector": "Insurance"},
+      {"symbol": "GODREJCP.NS", "name": "Godrej Consumer Products", "sector": "FMCG"}
     ];
 
     this.selectedFunds = [];
     this.currentStock = null;
+    this.stockData = null;
     this.scanResults = [];
     
-    console.log('Loaded', this.mutualFunds.length, 'mutual funds');
     this.init();
   }
 
   init() {
     console.log('Initializing SMF Analyzer...');
     this.setupEventListeners();
-    this.showToast('SMF Analyzer loaded with comprehensive fund database', 'success');
+    this.showToast('Application loaded successfully', 'success');
   }
 
   setupEventListeners() {
-    console.log('Setting up event listeners...');
-    
     // Main tab switching
     document.querySelectorAll('.main-tab').forEach(tab => {
       tab.addEventListener('click', (e) => {
         const tabName = e.target.dataset.tab;
-        console.log('Tab clicked:', tabName);
         this.switchMainTab(tabName);
       });
     });
 
-    // Stock search
+    // Stock search and suggestions
     const stockSearch = document.getElementById('stockSearch');
     if (stockSearch) {
       stockSearch.addEventListener('input', (e) => {
         this.handleStockSuggestions(e.target.value);
+      });
+
+      // Handle enter key
+      stockSearch.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          const query = e.target.value.trim();
+          if (query) {
+            this.fetchStockByQuery(query);
+          }
+        }
       });
     }
 
@@ -163,7 +100,7 @@ class SMFAnalyzer {
     const stockFetchBtn = document.getElementById('stockFetchBtn');
     if (stockFetchBtn) {
       stockFetchBtn.addEventListener('click', () => {
-        const query = stockSearch ? stockSearch.value.trim() : '';
+        const query = stockSearch.value.trim();
         if (query) {
           this.fetchStockByQuery(query);
         } else {
@@ -183,9 +120,7 @@ class SMFAnalyzer {
     // Mutual fund search - FIXED IMPLEMENTATION
     const fundSearch = document.getElementById('fundSearch');
     if (fundSearch) {
-      console.log('Setting up fund search listener');
       fundSearch.addEventListener('input', (e) => {
-        console.log('Fund search input:', e.target.value);
         this.handleFundSuggestions(e.target.value);
       });
     }
@@ -206,15 +141,31 @@ class SMFAnalyzer {
       });
     }
 
-    // External Scanner button
-    const runScannersBtn = document.getElementById('runScannersBtn');
-    if (runScannersBtn) {
-      console.log('Setting up external scanners button');
-      runScannersBtn.addEventListener('click', () => {
-        console.log('Run scanners clicked');
-        this.runExternalScanners();
+    // Export buttons
+    const exportCSV = document.getElementById('exportCSV');
+    if (exportCSV) {
+      exportCSV.addEventListener('click', () => {
+        this.exportData('csv');
       });
     }
+
+    const exportJSON = document.getElementById('exportJSON');
+    if (exportJSON) {
+      exportJSON.addEventListener('click', () => {
+        this.exportData('json');
+      });
+    }
+
+    // Filter range sliders
+    ['fundScoreFilter', 'techScoreFilter', 'aiScoreFilter'].forEach(id => {
+      const slider = document.getElementById(id);
+      const display = document.getElementById(id.replace('Filter', 'Value'));
+      if (slider && display) {
+        slider.addEventListener('input', (e) => {
+          display.textContent = e.target.value;
+        });
+      }
+    });
 
     // Hide suggestions when clicking outside
     document.addEventListener('click', (e) => {
@@ -236,27 +187,38 @@ class SMFAnalyzer {
     document.querySelectorAll('.main-tab').forEach(tab => {
       tab.classList.remove('active-tab');
     });
-    const activeTab = document.querySelector(`[data-tab="${tabName}"]`);
-    if (activeTab) {
-      activeTab.classList.add('active-tab');
-    }
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active-tab');
 
-    // Show/hide content sections
+    // Show/hide content
     document.querySelectorAll('.tab-content').forEach(content => {
       content.classList.add('hidden');
     });
+    document.getElementById(tabName).classList.remove('hidden');
+  }
+
+  switchSubTab(subtabName) {
+    console.log('Switching to subtab:', subtabName);
     
-    const targetTab = document.getElementById(tabName);
-    if (targetTab) {
-      targetTab.classList.remove('hidden');
-      console.log('Tab switched successfully to:', tabName);
+    // Update sub-tab buttons
+    document.querySelectorAll('.sub-tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    document.querySelector(`[data-subtab="${subtabName}"]`).classList.add('active');
+
+    // Show/hide panels
+    document.querySelectorAll('.subtab-panel').forEach(panel => {
+      panel.classList.add('hidden');
+    });
+    document.getElementById(subtabName).classList.remove('hidden');
+
+    // Load data based on subtab
+    if (this.currentStock) {
+      this.loadSubTabData(subtabName);
     }
   }
 
-  // STOCK FUNCTIONALITY
   handleStockSuggestions(query) {
     const suggestionsList = document.getElementById('stockSuggestions');
-    if (!suggestionsList) return;
     
     if (query.length < 2) {
       suggestionsList.classList.add('hidden');
@@ -276,7 +238,7 @@ class SMFAnalyzer {
     suggestionsList.innerHTML = matches.map(stock => 
       `<li class="suggestion-item" data-symbol="${stock.symbol}" data-name="${stock.name}" data-sector="${stock.sector}">
         <div>
-          <strong>${stock.symbol.replace('.NS', '')}</strong> - ${stock.name}
+          <strong>${stock.symbol}</strong> - ${stock.name}
           <small style="display: block; color: var(--color-text-secondary);">${stock.sector}</small>
         </div>
       </li>`
@@ -298,13 +260,21 @@ class SMFAnalyzer {
   }
 
   async fetchStockByQuery(query) {
-    console.log('Fetching stock by query:', query);
-    
+    // Try to find exact match first
     let stock = this.stockSymbols.find(s => 
-      s.symbol.toLowerCase().includes(query.toLowerCase()) ||
-      s.name.toLowerCase().includes(query.toLowerCase())
+      s.symbol.toLowerCase() === query.toLowerCase() ||
+      s.name.toLowerCase() === query.toLowerCase()
     );
 
+    // If not found, try partial match
+    if (!stock) {
+      stock = this.stockSymbols.find(s => 
+        s.symbol.toLowerCase().includes(query.toLowerCase()) ||
+        s.name.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+    // If still not found, create a generic entry
     if (!stock) {
       const symbol = query.toUpperCase().includes('.NS') ? query.toUpperCase() : query.toUpperCase() + '.NS';
       stock = { symbol, name: query, sector: 'Unknown' };
@@ -313,42 +283,56 @@ class SMFAnalyzer {
     this.selectStock(stock);
   }
 
-  selectStock(stock) {
+  async selectStock(stock) {
     console.log('Selecting stock:', stock);
     
     this.currentStock = stock;
-    const stockSearch = document.getElementById('stockSearch');
-    if (stockSearch) {
-      stockSearch.value = `${stock.symbol.replace('.NS', '')} - ${stock.name}`;
-    }
+    document.getElementById('stockSearch').value = `${stock.symbol} - ${stock.name}`;
     
     // Show selected stock info
     const selectedStock = document.getElementById('selectedStock');
-    if (selectedStock) {
-      const stockNameEl = selectedStock.querySelector('.stock-name');
-      if (stockNameEl) {
-        stockNameEl.textContent = `${stock.symbol.replace('.NS', '')} - ${stock.name}`;
-      }
-      selectedStock.classList.remove('hidden');
-    }
+    selectedStock.querySelector('.stock-name').textContent = `${stock.symbol} - ${stock.name}`;
+    selectedStock.classList.remove('hidden');
 
     // Show analysis section
-    const stockAnalysis = document.getElementById('stockAnalysis');
-    if (stockAnalysis) {
-      stockAnalysis.classList.remove('hidden');
-    }
+    document.getElementById('stockAnalysis').classList.remove('hidden');
 
+    // Generate mock stock data
     this.generateMockStockData(stock.symbol);
   }
 
   generateMockStockData(symbol) {
     console.log('Generating mock data for:', symbol);
     
+    // Generate realistic mock data for demonstration
     const basePrice = 100 + Math.random() * 900;
+    const candles = [];
+    const now = new Date();
+    
+    for (let i = 252; i >= 0; i--) {
+      const date = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
+      const price = basePrice + (Math.random() - 0.5) * basePrice * 0.1;
+      const open = price + (Math.random() - 0.5) * price * 0.02;
+      const close = price + (Math.random() - 0.5) * price * 0.02;
+      const high = Math.max(open, close) + Math.random() * price * 0.01;
+      const low = Math.min(open, close) - Math.random() * price * 0.01;
+      
+      candles.push({
+        t: date,
+        o: Math.round(open * 100) / 100,
+        h: Math.round(high * 100) / 100,
+        l: Math.round(low * 100) / 100,
+        c: Math.round(close * 100) / 100,
+        v: Math.floor(Math.random() * 1000000)
+      });
+    }
+
     this.stockData = {
       symbol: symbol,
-      currentPrice: basePrice,
-      previousClose: basePrice * 0.98
+      currentPrice: candles[candles.length - 1].c,
+      previousClose: candles[candles.length - 2].c,
+      candles: candles,
+      meta: { symbol: symbol }
     };
 
     this.showToast('Stock data loaded successfully', 'success');
@@ -356,33 +340,8 @@ class SMFAnalyzer {
     this.loadSubTabData('fundamentals');
   }
 
-  switchSubTab(subtabName) {
-    console.log('Switching to subtab:', subtabName);
-    
-    document.querySelectorAll('.sub-tab').forEach(tab => {
-      tab.classList.remove('active');
-    });
-    const activeSubTab = document.querySelector(`[data-subtab="${subtabName}"]`);
-    if (activeSubTab) {
-      activeSubTab.classList.add('active');
-    }
-
-    document.querySelectorAll('.subtab-panel').forEach(panel => {
-      panel.classList.add('hidden');
-    });
-    const targetPanel = document.getElementById(subtabName);
-    if (targetPanel) {
-      targetPanel.classList.remove('hidden');
-    }
-
-    if (this.currentStock) {
-      this.loadSubTabData(subtabName);
-    }
-  }
-
   loadSubTabData(subtabName) {
     const panel = document.getElementById(subtabName);
-    if (!panel) return;
     
     switch (subtabName) {
       case 'fundamentals':
@@ -406,6 +365,7 @@ class SMFAnalyzer {
   renderFundamentals(panel) {
     if (!this.stockData) return;
     
+    // Generate mock fundamental data
     const fundamentals = [
       { label: 'P/E Ratio', value: (15 + Math.random() * 20).toFixed(2), good: true },
       { label: 'P/B Ratio', value: (1 + Math.random() * 3).toFixed(2), good: Math.random() > 0.5 },
@@ -432,36 +392,83 @@ class SMFAnalyzer {
   }
 
   renderTechnicals(panel) {
+    if (!this.stockData) return;
+
+    const indicators = [
+      { name: 'RSI (14)', value: '45.2', signal: 'neutral' },
+      { name: 'MACD', value: '2.15', signal: 'bullish' },
+      { name: 'Moving Avg (20)', value: `₹ ${this.stockData.currentPrice.toFixed(2)}`, signal: 'bullish' },
+      { name: 'Moving Avg (50)', value: `₹ ${(this.stockData.currentPrice * 0.96).toFixed(2)}`, signal: 'bearish' },
+      { name: 'Bollinger Bands', value: 'Mid', signal: 'neutral' },
+      { name: 'Volume Trend', value: 'High', signal: 'bullish' }
+    ];
+
     panel.innerHTML = `
       <div class="technical-grid">
         <div class="technical-indicators">
-          <div class="indicator-card">
-            <div>
-              <div class="indicator-main">RSI (14)</div>
-              <div class="indicator-value">45.2</div>
+          ${indicators.map(indicator => `
+            <div class="indicator-card">
+              <div>
+                <div class="indicator-main">${indicator.name}</div>
+                <div class="indicator-value">${indicator.value}</div>
+              </div>
+              <span class="signal-badge signal-${indicator.signal}">${indicator.signal.toUpperCase()}</span>
             </div>
-            <span class="signal-badge signal-neutral">NEUTRAL</span>
-          </div>
-          <div class="indicator-card">
-            <div>
-              <div class="indicator-main">MACD</div>
-              <div class="indicator-value">2.15</div>
-            </div>
-            <span class="signal-badge signal-bullish">BULLISH</span>
-          </div>
-          <div class="indicator-card">
-            <div>
-              <div class="indicator-main">Moving Avg (20)</div>
-              <div class="indicator-value">₹ ${this.stockData?.currentPrice?.toFixed(2) || '0.00'}</div>
-            </div>
-            <span class="signal-badge signal-bullish">BULLISH</span>
-          </div>
+          `).join('')}
         </div>
-        <div class="chart-container" style="height: 300px;">
-          <p style="text-align: center; padding: 50px;">Technical Chart (Demo)</p>
+        <div class="chart-container" style="height: 400px;">
+          <canvas id="priceChart"></canvas>
         </div>
       </div>
     `;
+
+    // Draw technical chart
+    setTimeout(() => this.drawTechnicalChart(), 100);
+  }
+
+  drawTechnicalChart() {
+    const canvas = document.getElementById('priceChart');
+    if (!canvas || !this.stockData) return;
+
+    const ctx = canvas.getContext('2d');
+    const chartData = this.stockData.candles.slice(-60); // Last 60 days
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: chartData.map(d => d.t.toLocaleDateString()),
+        datasets: [{
+          label: 'Price',
+          data: chartData.map(d => d.c),
+          borderColor: '#1FB8CD',
+          backgroundColor: 'rgba(31, 184, 205, 0.1)',
+          fill: true,
+          tension: 0.1
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            grid: {
+              color: 'var(--color-border)'
+            }
+          },
+          x: {
+            grid: {
+              color: 'var(--color-border)'
+            }
+          }
+        }
+      }
+    });
   }
 
   renderShareholding(panel) {
@@ -470,7 +477,7 @@ class SMFAnalyzer {
         <div>
           <h4>Shareholding Pattern</h4>
           <div class="chart-container" style="height: 300px;">
-            <p style="text-align: center; padding: 50px;">Shareholding Chart (Demo)</p>
+            <canvas id="shareholdingChart"></canvas>
           </div>
         </div>
         <div>
@@ -496,6 +503,31 @@ class SMFAnalyzer {
         </div>
       </div>
     `;
+
+    setTimeout(() => {
+      const canvas = document.getElementById('shareholdingChart');
+      if (!canvas) return;
+
+      new Chart(canvas, {
+        type: 'pie',
+        data: {
+          labels: ['Promoters', 'FII', 'DII', 'Public'],
+          datasets: [{
+            data: [68.5, 18.2, 8.7, 4.6],
+            backgroundColor: ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5']
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    }, 100);
   }
 
   renderCompanyBook(panel) {
@@ -504,22 +536,64 @@ class SMFAnalyzer {
         <div class="card">
           <h4>Revenue Trend (₹ Cr)</h4>
           <div class="chart-container" style="height: 200px;">
-            <p style="text-align: center; padding: 50px;">Revenue Chart (Demo)</p>
+            <canvas id="revenueChart"></canvas>
           </div>
         </div>
         <div class="card">
           <h4>Profit Trend (₹ Cr)</h4>
           <div class="chart-container" style="height: 200px;">
-            <p style="text-align: center; padding: 50px;">Profit Chart (Demo)</p>
+            <canvas id="profitChart"></canvas>
           </div>
         </div>
       </div>
     `;
+
+    setTimeout(() => {
+      // Revenue Chart
+      const revenueCanvas = document.getElementById('revenueChart');
+      if (revenueCanvas) {
+        new Chart(revenueCanvas, {
+          type: 'bar',
+          data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: 'Revenue',
+              data: [12000, 14500, 16200, 18900, 21500],
+              backgroundColor: '#1FB8CD'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+
+      // Profit Chart
+      const profitCanvas = document.getElementById('profitChart');
+      if (profitCanvas) {
+        new Chart(profitCanvas, {
+          type: 'bar',
+          data: {
+            labels: ['2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: 'Profit',
+              data: [1800, 2100, 2400, 2850, 3200],
+              backgroundColor: '#B4413C'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+          }
+        });
+      }
+    }, 100);
   }
 
   renderAIAnalysis(panel) {
-    if (!this.stockData) return;
-    
     const recommendations = [
       {
         term: 'Short Term (1-3 months)',
@@ -558,32 +632,54 @@ class SMFAnalyzer {
           </div>
         `).join('')}
       </div>
+      
+      <div class="strategy-card">
+        <h4>AI Trading Strategy</h4>
+        <p class="strategy-text">
+          Based on comprehensive analysis of technical indicators, fundamental metrics, and market sentiment, 
+          the AI recommends a graduated investment approach. Consider accumulating positions on dips below 
+          ₹${(this.stockData.currentPrice * 0.95).toFixed(2)} levels while maintaining stop-loss at ₹${(this.stockData.currentPrice * 0.90).toFixed(2)}. The stock shows strong potential for 
+          outperformance in the medium to long term.
+        </p>
+      </div>
     `;
   }
 
-  updateAllScores() {
+  calculateAllScores() {
+    if (!this.stockData) {
+      return { fundamental: 0, technical: 0, ai: 0, overall: 0 };
+    }
+
+    // Mock scoring logic - in real app, this would use actual calculations
     const fundamental = 60 + Math.random() * 30;
     const technical = 50 + Math.random() * 40;
     const ai = 65 + Math.random() * 25;
     const overall = (fundamental + technical + ai) / 3;
 
-    const scores = {
+    return {
       fundamental: Math.round(fundamental),
       technical: Math.round(technical),
       ai: Math.round(ai),
       overall: Math.round(overall)
     };
+  }
+
+  updateAllScores() {
+    const scores = this.calculateAllScores();
     
+    // Update score badges
     this.updateScoreBadge('fundamentalsScore', scores.fundamental);
     this.updateScoreBadge('technicalsScore', scores.technical);
     this.updateScoreBadge('aiScore', scores.ai);
     
+    // Update overall score
     const overallScore = document.querySelector('.overall-score');
     if (overallScore) {
       overallScore.textContent = `Overall: ${scores.overall}%`;
       overallScore.className = `overall-score status ${this.getScoreClass(scores.overall, 'status')}`;
     }
 
+    // Mock scores for other tabs
     this.updateScoreBadge('shareholdingScore', 75);
     this.updateScoreBadge('companyScore', 68);
   }
@@ -603,69 +699,111 @@ class SMFAnalyzer {
     return score >= 70 ? 'score-good' : score >= 40 ? 'score-neutral' : 'score-poor';
   }
 
-  // MUTUAL FUNDS - FIXED WORKING IMPLEMENTATION
-  handleFundSuggestions(query) {
-    console.log('Handling fund suggestions for:', query);
+  // FIXED MUTUAL FUNDS FUNCTIONALITY
+  async searchMutualFunds(searchTerm) {
+    if (!searchTerm || searchTerm.length < 2) return [];
     
-    const suggestionsList = document.getElementById('fundSuggestions');
-    if (!suggestionsList) {
-      console.error('Fund suggestions list not found');
-      return;
+    try {
+      // Method 1: Use direct search API
+      let directResults = [];
+      try {
+        const searchResponse = await fetch(`https://api.mfapi.in/mf/search?q=${encodeURIComponent(searchTerm)}`);
+        if (searchResponse.ok) {
+          directResults = await searchResponse.json();
+        }
+      } catch (error) {
+        console.log('Direct search API failed, continuing with local search');
+      }
+      
+      // Method 2: Filter from complete fund list (cached)
+      if (!window.allMutualFunds) {
+        try {
+          const allFundsResponse = await fetch('https://api.mfapi.in/mf');
+          if (allFundsResponse.ok) {
+            window.allMutualFunds = await allFundsResponse.json();
+          }
+        } catch (error) {
+          console.log('Failed to fetch all funds, using empty array');
+          window.allMutualFunds = [];
+        }
+      }
+      
+      // Filter local results
+      const localResults = window.allMutualFunds ? window.allMutualFunds.filter(fund => 
+        fund.schemeName && fund.schemeName.toLowerCase().includes(searchTerm.toLowerCase())
+      ) : [];
+      
+      // Combine and deduplicate results
+      const combinedResults = [...directResults, ...localResults];
+      const uniqueResults = combinedResults.filter((fund, index, self) => 
+        index === self.findIndex(f => f.schemeCode === fund.schemeCode)
+      );
+      
+      return uniqueResults.slice(0, 50); // Limit to 50 results for performance
+    } catch (error) {
+      console.error('MF Search Error:', error);
+      return [];
     }
+  }
+
+  async handleFundSuggestions(query) {
+    const suggestionsList = document.getElementById('fundSuggestions');
     
     if (query.length < 2) {
       suggestionsList.classList.add('hidden');
       return;
     }
 
-    // Search through comprehensive mutual funds database
-    const matches = this.mutualFunds.filter(fund => 
-      fund.schemeName.toLowerCase().includes(query.toLowerCase())
-    ).slice(0, 50); // Show up to 50 results
-
-    console.log(`Found ${matches.length} matching funds for "${query}"`);
-
-    if (matches.length === 0) {
-      suggestionsList.innerHTML = '<li class="suggestion-item">No funds found - try a different search term</li>';
-      suggestionsList.classList.remove('hidden');
-      setTimeout(() => suggestionsList.classList.add('hidden'), 3000);
-      return;
-    }
-
-    suggestionsList.innerHTML = matches.map(fund => 
-      `<li class="suggestion-item" data-scheme-code="${fund.schemeCode}">
-        <input type="checkbox" class="suggestion-checkbox" ${this.selectedFunds.find(f => f.schemeCode === fund.schemeCode) ? 'checked' : ''}>
-        <div>
-          <strong>${fund.schemeName}</strong>
-        </div>
-      </li>`
-    ).join('');
-
+    // Show loading state
+    suggestionsList.innerHTML = '<li class="suggestion-item">Searching funds...</li>';
     suggestionsList.classList.remove('hidden');
 
-    // Add click listeners
-    suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
-      if (item.dataset.schemeCode) {
-        item.addEventListener('click', (e) => {
-          e.preventDefault();
-          const checkbox = item.querySelector('.suggestion-checkbox');
-          const schemeCode = parseInt(item.dataset.schemeCode);
-          const fund = matches.find(f => f.schemeCode === schemeCode);
-          
-          if (checkbox.checked) {
-            this.removeFund(schemeCode);
-            checkbox.checked = false;
-          } else {
-            if (this.selectedFunds.length < 10) {
-              this.addFund(fund);
-              checkbox.checked = true;
-            } else {
-              this.showToast('Maximum 10 funds can be selected', 'warning');
-            }
-          }
-        });
+    try {
+      const matches = await this.searchMutualFunds(query);
+
+      if (matches.length === 0) {
+        suggestionsList.innerHTML = '<li class="suggestion-item">No funds found</li>';
+        return;
       }
-    });
+
+      suggestionsList.innerHTML = matches.map(fund => 
+        `<li class="suggestion-item" data-scheme-code="${fund.schemeCode}">
+          <input type="checkbox" class="suggestion-checkbox" ${this.selectedFunds.find(f => f.schemeCode === fund.schemeCode) ? 'checked' : ''}>
+          <div>
+            <strong>${fund.schemeName}</strong>
+          </div>
+        </li>`
+      ).join('');
+
+      suggestionsList.classList.remove('hidden');
+
+      // Add click listeners
+      suggestionsList.querySelectorAll('.suggestion-item').forEach(item => {
+        if (item.dataset.schemeCode) {
+          item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const checkbox = item.querySelector('.suggestion-checkbox');
+            const schemeCode = parseInt(item.dataset.schemeCode);
+            const fund = matches.find(f => f.schemeCode === schemeCode);
+            
+            if (checkbox.checked) {
+              this.removeFund(schemeCode);
+              checkbox.checked = false;
+            } else {
+              if (this.selectedFunds.length < 10) {
+                this.addFund(fund);
+                checkbox.checked = true;
+              } else {
+                this.showToast('Maximum 10 funds can be selected', 'warning');
+              }
+            }
+          });
+        }
+      });
+    } catch (error) {
+      console.error('Error in handleFundSuggestions:', error);
+      suggestionsList.innerHTML = '<li class="suggestion-item">Error searching funds</li>';
+    }
   }
 
   addFund(fund) {
@@ -674,13 +812,11 @@ class SMFAnalyzer {
       this.updateSelectedFundsDisplay();
       
       if (this.selectedFunds.length === 1) {
-        const fundAnalysis = document.getElementById('fundAnalysis');
-        if (fundAnalysis) {
-          fundAnalysis.classList.remove('hidden');
-        }
+        document.getElementById('fundAnalysis').classList.remove('hidden');
         this.switchFundView('single');
       }
       
+      // Show toast to confirm fund added
       this.showToast(`Added: ${fund.schemeName.substring(0, 40)}...`, 'success');
     }
   }
@@ -691,12 +827,10 @@ class SMFAnalyzer {
     this.updateSelectedFundsDisplay();
     
     if (this.selectedFunds.length === 0) {
-      const fundAnalysis = document.getElementById('fundAnalysis');
-      if (fundAnalysis) {
-        fundAnalysis.classList.add('hidden');
-      }
+      document.getElementById('fundAnalysis').classList.add('hidden');
     }
     
+    // Show toast to confirm fund removed
     if (fundToRemove) {
       this.showToast(`Removed: ${fundToRemove.schemeName.substring(0, 40)}...`, 'info');
     }
@@ -704,10 +838,7 @@ class SMFAnalyzer {
 
   updateSelectedFundsDisplay() {
     const container = document.getElementById('selectedFunds');
-    if (!container) return;
-    
     const chipsContainer = container.querySelector('.fund-chips');
-    if (!chipsContainer) return;
     
     if (this.selectedFunds.length === 0) {
       container.classList.add('hidden');
@@ -737,19 +868,13 @@ class SMFAnalyzer {
     document.querySelectorAll('[data-view]').forEach(btn => {
       btn.classList.remove('active');
     });
-    const activeBtn = document.querySelector(`[data-view="${view}"]`);
-    if (activeBtn) {
-      activeBtn.classList.add('active');
-    }
+    document.querySelector(`[data-view="${view}"]`).classList.add('active');
 
     // Show/hide views
     document.querySelectorAll('.fund-view').forEach(v => {
       v.classList.add('hidden');
     });
-    const targetView = document.getElementById(view === 'single' ? 'singleFund' : 'fundComparison');
-    if (targetView) {
-      targetView.classList.remove('hidden');
-    }
+    document.getElementById(view === 'single' ? 'singleFund' : 'fundComparison').classList.remove('hidden');
 
     // Load data
     if (view === 'single' && this.selectedFunds.length > 0) {
@@ -762,7 +887,6 @@ class SMFAnalyzer {
   renderSingleFundAnalysis() {
     const fund = this.selectedFunds[0];
     const container = document.getElementById('singleFund');
-    if (!container) return;
     
     container.innerHTML = `
       <h3>${fund.schemeName}</h3>
@@ -788,7 +912,7 @@ class SMFAnalyzer {
 
       <div style="display: grid; grid-template-columns: 1fr 300px; gap: 24px; margin-top: 24px;">
         <div class="chart-container" style="height: 300px;">
-          <p style="text-align: center; padding: 100px 20px;">NAV Performance Chart (Demo)</p>
+          <canvas id="navChart"></canvas>
         </div>
         <div>
           <h4>Fund Details</h4>
@@ -803,7 +927,7 @@ class SMFAnalyzer {
             </div>
             <div class="fundamental-card">
               <div class="fundamental-label">Fund Manager</div>
-              <div class="fundamental-value">Expert FM</div>
+              <div class="fundamental-value">John Doe</div>
             </div>
             <div class="fundamental-card">
               <div class="fundamental-label">Risk Level</div>
@@ -813,17 +937,46 @@ class SMFAnalyzer {
         </div>
       </div>
     `;
+
+    // Draw NAV chart
+    setTimeout(() => {
+      const canvas = document.getElementById('navChart');
+      if (!canvas) return;
+
+      const navData = Array.from({length: 30}, (_, i) => 40 + Math.sin(i/5) * 5 + Math.random() * 2);
+      
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: Array.from({length: 30}, (_, i) => `Day ${i+1}`),
+          datasets: [{
+            label: 'NAV',
+            data: navData,
+            borderColor: '#1FB8CD',
+            backgroundColor: 'rgba(31, 184, 205, 0.1)',
+            fill: true,
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    }, 100);
   }
 
   renderFundComparison() {
     const container = document.getElementById('fundComparison');
-    if (!container) return;
     
     container.innerHTML = `
       <h3>Fund Comparison (${this.selectedFunds.length} funds)</h3>
       
       <div class="chart-container" style="height: 400px; margin: 24px 0;">
-        <p style="text-align: center; padding: 150px 20px;">Comparative Performance Chart (Demo)<br><small>Showing returns comparison for selected funds</small></p>
+        <canvas id="comparisonChart"></canvas>
       </div>
 
       <div class="overlap-matrix">
@@ -854,18 +1007,66 @@ class SMFAnalyzer {
         </table>
       </div>
     `;
+
+    // Draw comparison chart
+    setTimeout(() => {
+      const canvas = document.getElementById('comparisonChart');
+      if (!canvas) return;
+
+      const colors = ['#1FB8CD', '#FFC185', '#B4413C', '#ECEBD5', '#5D878F'];
+      const datasets = this.selectedFunds.slice(0, 5).map((fund, index) => ({
+        label: `Fund ${index + 1}`,
+        data: Array.from({length: 12}, () => Math.random() * 20 + 5),
+        borderColor: colors[index],
+        backgroundColor: colors[index] + '20',
+        fill: false
+      }));
+
+      new Chart(canvas, {
+        type: 'line',
+        data: {
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: datasets
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top'
+            }
+          },
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'Return %'
+              }
+            }
+          }
+        }
+      });
+    }, 100);
   }
 
-  // SCANNER FUNCTIONALITY
-  runStockScan() {
+  // Scanner functionality
+  async runStockScan() {
+    const fundScore = parseInt(document.getElementById('fundScoreFilter').value);
+    const techScore = parseInt(document.getElementById('techScoreFilter').value);
+    const aiScore = parseInt(document.getElementById('aiScoreFilter').value);
+    const mcMin = parseFloat(document.getElementById('mcMin').value) || 0;
+    const mcMax = parseFloat(document.getElementById('mcMax').value) || Infinity;
+    const sector = document.getElementById('sectorFilter').value;
+
     this.showToast('Running stock scan...', 'info');
 
-    // Generate mock scan results
+    // Generate scan results
     this.scanResults = this.stockSymbols.map(stock => {
       const fundamental = Math.floor(Math.random() * 100);
       const technical = Math.floor(Math.random() * 100);
       const ai = Math.floor(Math.random() * 100);
       const overall = Math.floor((fundamental + technical + ai) / 3);
+      const marketCap = Math.floor(Math.random() * 500000) + 1000;
 
       return {
         symbol: stock.symbol,
@@ -874,21 +1075,33 @@ class SMFAnalyzer {
         fundamental,
         technical,
         ai,
-        overall
+        overall,
+        marketCap
       };
+    }).filter(stock => {
+      return stock.fundamental >= fundScore &&
+             stock.technical >= techScore &&
+             stock.ai >= aiScore &&
+             stock.marketCap >= mcMin &&
+             stock.marketCap <= mcMax &&
+             (sector === '' || stock.sector === sector);
     }).sort((a, b) => b.overall - a.overall);
 
     this.renderScanResults();
-    this.showToast(`Found ${this.scanResults.length} stocks`, 'success');
+    this.showToast(`Found ${this.scanResults.length} stocks matching criteria`, 'success');
   }
 
   renderScanResults() {
     const tbody = document.querySelector('#scanResults tbody');
-    if (!tbody) return;
     
+    if (this.scanResults.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7" class="text-center py-16">No stocks match the selected criteria</td></tr>';
+      return;
+    }
+
     tbody.innerHTML = this.scanResults.map(stock => `
       <tr>
-        <td><strong>${stock.symbol.replace('.NS', '')}</strong></td>
+        <td><strong>${stock.symbol}</strong></td>
         <td>${stock.name}</td>
         <td>${stock.sector}</td>
         <td><span class="score-badge ${this.getScoreClass(stock.fundamental)}">${stock.fundamental}%</span></td>
@@ -899,193 +1112,53 @@ class SMFAnalyzer {
     `).join('');
   }
 
-  // EXTERNAL SCANNER FUNCTIONALITY
-  async runExternalScanners() {
-    console.log('Running external scanners...');
-    
-    const runBtn = document.getElementById('runScannersBtn');
-    const progressContainer = document.getElementById('scannerProgress');
-    const resultsContainer = document.getElementById('scannerResults');
-    
-    if (!runBtn || !progressContainer || !resultsContainer) {
-      console.error('Scanner elements not found');
+  exportData(format) {
+    if (this.scanResults.length === 0) {
+      this.showToast('No data to export. Run a scan first.', 'warning');
       return;
     }
-    
-    // Show running state
-    runBtn.classList.add('running');
-    runBtn.disabled = true;
-    progressContainer.classList.remove('hidden');
-    resultsContainer.innerHTML = '';
 
-    const progressFill = progressContainer.querySelector('.progress-fill');
-    const progressCount = progressContainer.querySelector('.progress-count');
-    const progressTotal = progressContainer.querySelector('.progress-total');
-    
-    if (progressTotal) progressTotal.textContent = this.externalScanners.length;
-    
-    this.showToast('Starting external scanners...', 'info');
-    
-    let completedCount = 0;
-    
-    // Process scanners sequentially
-    for (let i = 0; i < this.externalScanners.length; i++) {
-      const scanner = this.externalScanners[i];
-      
-      // Update progress
-      if (progressCount) progressCount.textContent = completedCount;
-      if (progressFill) progressFill.style.width = `${(completedCount / this.externalScanners.length) * 100}%`;
-      
-      // Create scanner card
-      this.createScannerCard(scanner, resultsContainer);
-      
-      try {
-        const stocks = this.generateMockScannerData(scanner.name);
-        await this.delay(500);
-        this.updateScannerCard(scanner.name, 'success', stocks);
-      } catch (error) {
-        console.error(`Error with ${scanner.name}:`, error);
-        this.updateScannerCard(scanner.name, 'error', [], error.message);
-      }
-      
-      completedCount++;
-      
-      if (i < this.externalScanners.length - 1) {
-        await this.delay(800);
-      }
-    }
-    
-    // Final progress update
-    if (progressCount) progressCount.textContent = completedCount;
-    if (progressFill) progressFill.style.width = '100%';
-    
-    // Hide progress and restore button
-    setTimeout(() => {
-      progressContainer.classList.add('hidden');
-      runBtn.classList.remove('running');
-      runBtn.disabled = false;
-      this.showToast(`Completed scanning ${completedCount} external sources`, 'success');
-    }, 1000);
-  }
+    let content, filename, mimeType;
 
-  generateMockScannerData(scannerName) {
-    const commonStocks = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ICICIBANK', 'KOTAKBANK', 'LT', 'HCLTECH', 'ITC', 'SBIN'];
-    const count = Math.floor(Math.random() * 10) + 5;
-    const stocks = new Set();
-    
-    const shuffledStocks = [...commonStocks].sort(() => 0.5 - Math.random());
-    shuffledStocks.slice(0, count).forEach(stock => stocks.add(stock));
-    
-    return Array.from(stocks);
-  }
-
-  calculateAIScore(stockSymbol) {
-    let score = 50;
-    score += (8 - Math.min(stockSymbol.length, 8)) * 2;
-    
-    let hash = 0;
-    for (let i = 0; i < stockSymbol.length; i++) {
-      const char = stockSymbol.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
-      hash = hash & hash;
-    }
-    
-    const hashScore = Math.abs(hash % 40) - 20;
-    score += hashScore;
-    
-    const largeCaps = ['RELIANCE', 'TCS', 'HDFCBANK', 'INFY', 'ICICIBANK'];
-    if (largeCaps.includes(stockSymbol)) {
-      score += 15;
-    }
-    
-    score = Math.max(45, Math.min(95, score));
-    return Math.round(score);
-  }
-
-  getAIScoreClass(score) {
-    if (score >= 85) return 'ai-score--excellent';
-    if (score >= 75) return 'ai-score--good';
-    if (score >= 60) return 'ai-score--average';
-    return 'ai-score--poor';
-  }
-
-  createScannerCard(scanner, container) {
-    const card = document.createElement('div');
-    card.className = 'scanner-result-card';
-    card.id = `scanner-${scanner.name.replace(/\s+/g, '-').toLowerCase()}`;
-    
-    card.innerHTML = `
-      <div class="scanner-card-header">
-        <h4 class="scanner-name">${scanner.name}</h4>
-        <span class="scanner-status scanner-status--loading">Loading</span>
-      </div>
-      <div class="scanner-card-body">
-        <div class="loading-spinner">Fetching data...</div>
-      </div>
-    `;
-    
-    container.appendChild(card);
-  }
-
-  updateScannerCard(scannerName, status, stocks, errorMessage = null) {
-    const cardId = `scanner-${scannerName.replace(/\s+/g, '-').toLowerCase()}`;
-    const card = document.getElementById(cardId);
-    if (!card) return;
-    
-    const statusElement = card.querySelector('.scanner-status');
-    const bodyElement = card.querySelector('.scanner-card-body');
-    
-    if (statusElement) {
-      statusElement.className = `scanner-status scanner-status--${status}`;
-      statusElement.textContent = status === 'success' ? 'Success' : 'Error';
-    }
-    
-    if (status === 'success' && stocks.length > 0) {
-      const stocksWithScores = stocks.map(symbol => ({
-        symbol,
-        aiScore: this.calculateAIScore(symbol)
-      })).sort((a, b) => b.aiScore - a.aiScore);
+    if (format === 'csv') {
+      const headers = ['Symbol', 'Company', 'Sector', 'Fundamental', 'Technical', 'AI Score', 'Overall'];
+      const csvContent = [
+        headers.join(','),
+        ...this.scanResults.map(stock => [
+          stock.symbol,
+          `"${stock.name}"`,
+          stock.sector,
+          stock.fundamental,
+          stock.technical,
+          stock.ai,
+          stock.overall
+        ].join(','))
+      ].join('\n');
       
-      bodyElement.innerHTML = `
-        <table class="ext-scan-table">
-          <thead>
-            <tr>
-              <th>Stock Name</th>
-              <th>AI Score</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${stocksWithScores.map(stock => `
-              <tr>
-                <td class="stock-symbol">${stock.symbol}</td>
-                <td>
-                  <span class="ai-score ${this.getAIScoreClass(stock.aiScore)}">${stock.aiScore}</span>
-                </td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-    } else if (status === 'success' && stocks.length === 0) {
-      bodyElement.innerHTML = '<div class="no-data">No stocks found in this scanner</div>';
+      content = csvContent;
+      filename = 'stock_scan_results.csv';
+      mimeType = 'text/csv';
     } else {
-      bodyElement.innerHTML = `
-        <div class="error-message">
-          ${errorMessage || 'Failed to fetch data'}
-          <br><small>Demo mode - using mock data</small>
-        </div>
-      `;
+      content = JSON.stringify(this.scanResults, null, 2);
+      filename = 'stock_scan_results.json';
+      mimeType = 'application/json';
     }
-  }
 
-  delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    this.showToast(`Exported ${this.scanResults.length} records as ${format.toUpperCase()}`, 'success');
   }
 
   showToast(message, type = 'info') {
     const toast = document.getElementById('toast');
-    if (!toast) return;
-    
     toast.textContent = message;
     toast.className = `toast toast--${type}`;
     toast.classList.add('show');
@@ -1096,15 +1169,8 @@ class SMFAnalyzer {
   }
 }
 
-// Initialize the application when DOM is ready
-console.log('Script loaded, waiting for DOM...');
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM ready, initializing SMF Analyzer...');
-    window.smfAnalyzer = new SMFAnalyzer();
-  });
-} else {
-  console.log('DOM already ready, initializing SMF Analyzer...');
+// Initialize the application
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing SMF Analyzer...');
   window.smfAnalyzer = new SMFAnalyzer();
-}
+});
